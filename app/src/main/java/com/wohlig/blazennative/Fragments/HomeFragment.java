@@ -2,7 +2,6 @@ package com.wohlig.blazennative.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
@@ -11,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
@@ -35,18 +35,16 @@ public class HomeFragment extends Fragment {
     private SliderLayout slider;
     private static Activity activity;
     private static String TAG = "BLAZEN";
-    private static ProgressDialog progressDialog;
+    private static ProgressBar progressBar;
     private WebView webView;
     private String html;
-    private String[] sliderImages;
-    private ArrayList<String> listdata = new ArrayList<String>();
+    private ArrayList<String> sliderImageList = new ArrayList<String>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
-
         activity = getActivity();
 
         initilizeViews();
@@ -56,16 +54,8 @@ public class HomeFragment extends Fragment {
 
     private void initilizeViews() {
 
-        progressDialog = new ProgressDialog(activity);
-        progressDialog.setCancelable(false);
-
-        progressDialog.setMessage("Please wait...");
-
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         webView = (WebView) view.findViewById(R.id.webview);
-
         slider = (SliderLayout) view.findViewById(R.id.slider);
 
         getContent();
@@ -102,7 +92,7 @@ public class HomeFragment extends Fragment {
 
                                 if (sliderArray.length() > 0) {     //slider field there in json but no images inside sliderArray
                                     for (int i = 0; i < sliderArray.length(); i++) {
-                                        listdata.add(sliderArray.get(i).toString());
+                                        sliderImageList.add(sliderArray.get(i).toString());
                                     }
                                 }
 
@@ -111,7 +101,7 @@ public class HomeFragment extends Fragment {
                             }
                             done = true;
 
-                        } else{
+                        } else {
                             done = true;
                         }
                     } else {                                    //no internet and no cached copy also found in database
@@ -128,7 +118,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             protected void onPostExecute(String s) {
-                progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
                 if (done) {                         //everything went fine
                     refresh();
                 } else if (noInternet) {            //if no internet and no cached copy found in database
@@ -158,9 +148,9 @@ public class HomeFragment extends Fragment {
             webView.setVisibility(View.VISIBLE);
         }
 
-        if (!listdata.isEmpty()) {
-            for (int i = 0; i < listdata.size(); i++) {
-                addSliderImage(listdata.get(i));
+        if (!sliderImageList.isEmpty()) {
+            for (int i = 0; i < sliderImageList.size(); i++) {
+                addSliderImage(sliderImageList.get(i));
             }
             slider.setVisibility(View.VISIBLE);
         }
