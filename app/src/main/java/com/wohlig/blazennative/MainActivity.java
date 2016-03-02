@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wohlig.blazennative.Fragments.HomeFragment;
+import com.wohlig.blazennative.Fragments.ArticleFragment;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerCallbacks {
@@ -20,7 +20,7 @@ public class MainActivity extends ActionBarActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
-    private TextView tvTitle;
+    public static TextView tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity
     public void show() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        HomeFragment fragment = new HomeFragment();
+        ArticleFragment fragment = new ArticleFragment();
 
         //fragmentTransaction.add(R.id.container, homeFragment, "HOME");
         fragmentTransaction.replace(R.id.container, fragment);
@@ -80,5 +80,9 @@ public class MainActivity extends ActionBarActivity
 
         Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
         return super.onOptionsItemSelected(item);
+    }
+
+    public static void setToolbarText(String text) {
+        tvTitle.setText(text);
     }
 }

@@ -27,13 +27,14 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     }
 
     @Override
-    public NavigationDrawerAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public NavigationDrawerAdapter.ViewHolder onCreateViewHolder(final ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.drawer_row, viewGroup, false);
         final ViewHolder viewHolder = new ViewHolder(v);
         viewHolder.itemView.setClickable(true);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                                                    @Override
                                                    public void onClick(View v) {
+
                                                        if (mSelectedView != null) {
                                                            mSelectedView.setSelected(false);
                                                        }

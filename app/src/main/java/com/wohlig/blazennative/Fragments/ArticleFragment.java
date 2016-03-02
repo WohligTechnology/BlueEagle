@@ -10,45 +10,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.squareup.picasso.Picasso;
 import com.wohlig.blazennative.HttpCall.HttpCall;
 import com.wohlig.blazennative.MainActivity;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.util.InternetOperations;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+public class ArticleFragment extends Fragment {
 
-/**
- * Created by Jay on 23-02-2016.
- */
-public class HomeFragment extends Fragment {
     private View view;
     private static final String MIME_TYPE = "text/html";
     private static final String ENCODING = "UTF-8";
-    private SliderLayout slider;
     private static Activity activity;
     private static String TAG = "BLAZEN";
     private static ProgressBar progressBar;
     private WebView webView;
-    private String html;
-    private ArrayList<String> sliderImageList = new ArrayList<String>();
+    private String html, bannerUrl, title;
+    private ImageView ivBanner;
+    private TextView tvTitle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_article, container, false);
         activity = getActivity();
 
-        ((MainActivity) this.getActivity()).setToolbarText("Home");
+        ((MainActivity) this.getActivity()).setToolbarText("About");
         initilizeViews();
 
         return view;
@@ -58,7 +53,8 @@ public class HomeFragment extends Fragment {
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         webView = (WebView) view.findViewById(R.id.webview);
-        slider = (SliderLayout) view.findViewById(R.id.slider);
+        ivBanner = (ImageView) view.findViewById(R.id.ivBanner);
+        tvTitle = (TextView) view.findViewById(R.id.tvTitle);
 
         getContent();
     }
@@ -77,35 +73,21 @@ public class HomeFragment extends Fragment {
                 }
                 String response;
                 JSONObject jsonObject = null;
+                String id = "7";
+                String url = InternetOperations.SERVER_URL + "article/get?id=" + id;
 
                 try {
-                    response = HttpCall.getDataGet(InternetOperations.SERVER_URL + "home/get");
+                    response = HttpCall.getDataGet(url);
 
                     if (!response.equals("")) {                 //check is the response empty
                         jsonObject = new JSONObject(response);
 
                         html = jsonObject.optString("content");
+                        bannerUrl = jsonObject.optString("banner");
+                        title = jsonObject.optString("title");
 
-                        String slider = jsonObject.optString("slider");
+                        done = true;
 
-                        if (!slider.isEmpty()) {                //check if slider is empty
-                            try {
-                                JSONArray sliderArray = new JSONArray(slider);
-
-                                if (sliderArray.length() > 0) {     //slider field there in json but no images inside sliderArray
-                                    for (int i = 0; i < sliderArray.length(); i++) {
-                                        sliderImageList.add(sliderArray.get(i).toString());
-                                    }
-                                }
-
-                            } catch (JSONException je) {
-                                Log.e(TAG, Log.getStackTraceString(je));
-                            }
-                            done = true;
-
-                        } else {
-                            done = true;
-                        }
                     } else {                                    //no internet and no cached copy also found in database
                         noInternet = true;
                     }
@@ -132,17 +114,6 @@ public class HomeFragment extends Fragment {
         }.execute(null, null, null);
     }
 
-    private void addSliderImage(String imageLink) {
-
-        TextSliderView textSliderView = new TextSliderView(activity);
-        textSliderView
-                //.description("Slider")
-                .image(imageLink);
-
-        slider.addSlider(textSliderView);
-
-    }
-
     private void refresh() {
 
         if (!html.equals("") || !html.isEmpty()) {
@@ -150,12 +121,20 @@ public class HomeFragment extends Fragment {
             webView.setVisibility(View.VISIBLE);
         }
 
-        if (!sliderImageList.isEmpty()) {
-            for (int i = 0; i < sliderImageList.size(); i++) {
-                addSliderImage(sliderImageList.get(i));
-            }
-            slider.setVisibility(View.VISIBLE);
+        if (!bannerUrl.equals("") || !bannerUrl.isEmpty()) {
+            Picasso.with(activity)
+                    .load(bannerUrl)
+                    //.placeholder(R.drawable.ic_placeholder) // optional
+                    //.error(R.drawable.ic_error_fallback)         // optional
+                    .into(ivBanner);
+            ivBanner.setVisibility(View.VISIBLE);
         }
+
+        if (!title.equals("") || !title.isEmpty()) {
+            tvTitle.setText(title);
+            tvTitle.setVisibility(View.VISIBLE);
+        }
+
     }
 
 }
