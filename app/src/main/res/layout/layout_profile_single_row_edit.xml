@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="20dp">
+
+        <!--<ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom"
+            android:paddingBottom="@dimen/etDividerPadding"
+            android:background="#ddd"/>-->
+
+        <!--<EditText
+            android:id="@+id/text4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="Name"
+            android:text="Test"
+            android:textSize="14sp"
+            android:textColorHint="#ddd"
+            android:background="@android:color/transparent"/>-->
+
+        <com.rey.material.widget.EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etBookName"
+            android:hint="Name"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:inputType="textCapWords|textCapSentences"
+
+            app:et_labelEnable="true"
+            app:et_dividerColor="#ddd"
+            app:et_dividerHeight="@dimen/etDividerHeight"
+            app:et_dividerPadding="@dimen/etDividerPadding"/>
+
+            <!--android:textColor="@color/etTextColor"
+            app:et_labelTextColor="@color/etLabelTextColor"
+            app:et_labelPadding="@dimen/etLabelPadding"
+            app:et_labelEnable="true"
+            app:et_dividerColor="@color/etDividerColor"
+            app:et_dividerHeight="@dimen/etDividerHeight"
+            app:et_dividerPadding="@dimen/etDividerPadding"/>-->
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#ddd"/>
+
+</LinearLayout>

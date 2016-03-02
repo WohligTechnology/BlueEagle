@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.wohlig.blazennative.Fragments.PhotoGridFragment">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="3"
+
+            android:layout_gravity="center_horizontal|top"
+            android:choiceMode="singleChoice"
+            android:verticalSpacing="5dp"
+            android:horizontalSpacing="5dp"
+            android:divider="@android:color/transparent"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"/>
+
+
+</FrameLayout>
