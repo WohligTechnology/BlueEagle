@@ -1,4 +1,4 @@
-package com.wohlig.blazennative.db;
+package com.wohlig.blazennative.Database;
 
 import com.orm.SugarRecord;
 

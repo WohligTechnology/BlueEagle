@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 import com.wohlig.blazennative.HttpCall.HttpCall;
 import com.wohlig.blazennative.MainActivity;
 import com.wohlig.blazennative.R;
-import com.wohlig.blazennative.util.InternetOperations;
+import com.wohlig.blazennative.Util.InternetOperations;
 
 import org.json.JSONException;
 import org.json.JSONObject;

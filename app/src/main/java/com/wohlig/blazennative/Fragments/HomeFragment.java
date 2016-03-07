@@ -18,7 +18,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.wohlig.blazennative.HttpCall.HttpCall;
 import com.wohlig.blazennative.MainActivity;
 import com.wohlig.blazennative.R;
-import com.wohlig.blazennative.util.InternetOperations;
+import com.wohlig.blazennative.Util.InternetOperations;
 
 import org.json.JSONArray;
 import org.json.JSONException;

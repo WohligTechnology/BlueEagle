@@ -2,7 +2,7 @@ package com.wohlig.blazennative.HttpCall;
 
 import android.util.Log;
 
-import com.wohlig.blazennative.db.CacheResponse;
+import com.wohlig.blazennative.Database.CacheResponse;
 
 import java.io.IOException;
 import java.util.Date;

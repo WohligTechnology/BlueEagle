@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.wohlig.blazennative.R;
-import com.wohlig.blazennative.util.WebViewController;
+import com.wohlig.blazennative.Util.WebViewController;
 
 public class SocialFragment extends Fragment {
 

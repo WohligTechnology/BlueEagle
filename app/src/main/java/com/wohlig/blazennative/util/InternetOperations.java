@@ -1,4 +1,4 @@
-package com.wohlig.blazennative.util;
+package com.wohlig.blazennative.Util;
 
 /**
  * Created by Jay on 02-03-2016.

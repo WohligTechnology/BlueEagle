@@ -1,4 +1,4 @@
-package com.wohlig.blazennative.util;
+package com.wohlig.blazennative.Util;
 
 import android.webkit.WebView;
 import android.webkit.WebViewClient;

@@ -7,7 +7,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
-import com.wohlig.blazennative.util.WebViewController;
+import com.wohlig.blazennative.Util.WebViewController;
 
 public class WebActivity extends AppCompatActivity {
 
