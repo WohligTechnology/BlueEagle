@@ -63,20 +63,8 @@ public class PhotoFragment extends Fragment {
         rvImageAlbum.setLayoutManager(llm);
 
         rvImageAlbum.addItemDecoration(new SpacesItemDecoration(Size.dpToPx(activity,10)));
-        
-        setListeners();
-        getContent();
-        
-    }
-    
-    private void setListeners(){
 
-        /*rvImageAlbum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(activity, v.getTag().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });*/
+        getContent();
     }
 
     private void getContent() {
@@ -92,9 +80,8 @@ public class PhotoFragment extends Fragment {
                     Looper.prepare();
                 }
                 String response;
-                //JSONObject jsonObject = null;
 
-                JSONArray jsonArray = null;
+                JSONArray jsonArray;
 
                 try {
                     response = HttpCall.getDataGet(InternetOperations.SERVER_URL + "image/getAllAlbums");
