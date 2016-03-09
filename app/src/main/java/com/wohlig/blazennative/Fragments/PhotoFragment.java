@@ -62,7 +62,10 @@ public class PhotoFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvImageAlbum.setLayoutManager(llm);
 
-        rvImageAlbum.addItemDecoration(new SpacesItemDecoration(Size.dpToPx(activity,10)));
+        rvImageAlbum.addItemDecoration(new SpacesItemDecoration(Size.dpToPx(activity, 10)));
+
+        ImageAlbumsAdapter imageAlbumsAdapter = new ImageAlbumsAdapter(listAlbums);
+        rvImageAlbum.setAdapter(imageAlbumsAdapter);
 
         getContent();
     }

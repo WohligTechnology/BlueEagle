@@ -1,21 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.wohlig.blazennative.Fragments.PhotoGridFragment">
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:columnCount="3"
+    <GridView
+        android:id="@+id/glImages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="3"
 
-            android:layout_gravity="center_horizontal|top"
-            android:choiceMode="singleChoice"
-            android:verticalSpacing="5dp"
-            android:horizontalSpacing="5dp"
-            android:divider="@android:color/transparent"
-            android:listSelector="@android:color/transparent"
-            android:scrollbars="none"/>
+        android:numColumns="auto_fit"
+        android:gravity="center"
+        android:stretchMode="columnWidth"
+        android:divider="@android:color/transparent"
+        android:listSelector="@android:color/transparent"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 
-</FrameLayout>
+</RelativeLayout>
