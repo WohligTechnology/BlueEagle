@@ -45,7 +45,7 @@ public class SingleBlogFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_single_blog, container, false);
         activity = getActivity();
-        id = "7";
+        id = ((MainActivity) this.getActivity()).getId();
 
         ((MainActivity) this.getActivity()).setToolbarText("BLOG");
         initilizeViews();
@@ -83,7 +83,6 @@ public class SingleBlogFragment extends Fragment {
 
                 try {
                     response = HttpCall.getDataGet(InternetOperations.SERVER_URL + "blog/get?id="+id);
-
                     if (!response.equals("")) {                 //check is the response empty
                         jsonObject = new JSONObject(response);
 

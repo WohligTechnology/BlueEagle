@@ -13,8 +13,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wohlig.blazennative.Fragments.PhotoFragment;
+import com.wohlig.blazennative.Fragments.BlogFragment;
 import com.wohlig.blazennative.Fragments.PhotoGridFragment;
+import com.wohlig.blazennative.Fragments.SingleBlogFragment;
 import com.wohlig.blazennative.Navigation.NavigationDrawerCallbacks;
 import com.wohlig.blazennative.Navigation.NavigationDrawerFragment;
 import com.wohlig.blazennative.R;
@@ -30,7 +31,7 @@ public class MainActivity extends ActionBarActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
     public static TextView tvTitle;
-    public static String ALBUM_ID;
+    public static String ID;
     public static String TITLE;
     private boolean doubleBackToExitPressedOnce = false;
 
@@ -55,7 +56,7 @@ public class MainActivity extends ActionBarActivity
     public void show() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        PhotoFragment fragment = new PhotoFragment();
+        BlogFragment fragment = new BlogFragment();
 
         //fragmentTransaction.add(R.id.container, homeFragment, "HOME");
         fragmentTransaction.replace(R.id.container, fragment);
@@ -113,12 +114,12 @@ public class MainActivity extends ActionBarActivity
         tvTitle.setText(text);
     }
 
-    public static void setAlbumId(String id) {
-        ALBUM_ID = id;
+    public static void setId(String id) {
+        ID = id;
     }
 
-    public static String getAlbumId() {
-        return ALBUM_ID;
+    public static String getId() {
+        return ID;
     }
 
     public void goToPhotoGridFragment(View v) {
@@ -127,12 +128,31 @@ public class MainActivity extends ActionBarActivity
 
         String id = info.get(0);
         String title = info.get(1);
-        setAlbumId(id);
+        setId(id);
         setToolbarText(title);
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         PhotoGridFragment fragment = new PhotoGridFragment();
+
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    public void goToSingleBlog(View v){
+        String id = v.getTag().toString();
+        /*List<String> info = Arrays.asList(tag.split("!!!"));
+
+        String id = info.get(0);
+        String title = info.get(1);*/
+        setId(id);
+        //setToolbarText(title);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        SingleBlogFragment fragment = new SingleBlogFragment();
 
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

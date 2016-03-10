@@ -56,7 +56,7 @@ public class PhotoGridFragment extends Fragment {
 
         //((MainActivity) this.getActivity()).setToolbarText("IMAGE");
 
-        albumId = ((MainActivity) this.getActivity()).getAlbumId();
+        albumId = ((MainActivity) this.getActivity()).getId();
 
         activity = getActivity();
 
