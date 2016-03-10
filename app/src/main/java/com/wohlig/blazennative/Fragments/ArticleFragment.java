@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.wohlig.blazennative.HttpCall.HttpCall;
-import com.wohlig.blazennative.MainActivity;
+import com.wohlig.blazennative.Activities.MainActivity;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.InternetOperations;
 

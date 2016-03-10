@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
@@ -15,15 +15,18 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="225dp">
+                android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/ivBanner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="225dp"
                     android:background="#ddd"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"/>
 
                 <LinearLayout
+                    android:id="@+id/llBanner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -31,9 +34,10 @@
                     android:layout_alignParentStart="true"
                     android:background="#AA000000"
                     android:orientation="vertical"
-                    android:paddingBottom="20dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tvTitle"
@@ -41,15 +45,17 @@
                         android:layout_height="wrap_content"
                         android:text="New Text"
                         android:textColor="#fff"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        android:visibility="gone"/>
 
                     <TextView
-                        android:id="@+id/tvDate"
+                        android:id="@+id/tvTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="New Text"
                         android:textColor="#fff"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
                 </LinearLayout>
             </RelativeLayout>
 
@@ -58,8 +64,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingBottom="20dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:paddingTop="20dp">
 
                 <TextView
@@ -67,16 +71,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Title"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:visibility="gone"/>
 
                 <WebView
+                    android:id="@+id/webView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"/>
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
-</FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

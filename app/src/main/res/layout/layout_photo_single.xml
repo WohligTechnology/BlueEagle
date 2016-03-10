@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:background="#ddd"
     android:orientation="vertical"
-    android:padding="0.5dp">
+    android:padding="0.5dp"
+    android:onClick="goToPhotoGridFragment">
 
     <ImageView
         android:id="@+id/ivCover"

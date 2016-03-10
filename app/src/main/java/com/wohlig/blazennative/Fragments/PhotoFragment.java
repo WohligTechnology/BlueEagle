@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.wohlig.blazennative.Activities.MainActivity;
 import com.wohlig.blazennative.Adapters.ImageAlbumsAdapter;
 import com.wohlig.blazennative.HttpCall.HttpCall;
 import com.wohlig.blazennative.POJOs.ImageAlbumsPojo;
@@ -42,6 +43,8 @@ public class PhotoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_photo, container, false);
+
+        ((MainActivity) this.getActivity()).setToolbarText("IMAGE");
 
         activity = getActivity();
 

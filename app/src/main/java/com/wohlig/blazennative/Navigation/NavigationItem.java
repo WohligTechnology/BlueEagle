@@ -1,4 +1,4 @@
-package com.wohlig.blazennative;
+package com.wohlig.blazennative.Navigation;
 
 import android.graphics.drawable.Drawable;
 

@@ -19,13 +19,15 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.ViewPagerSliderActivity;
 import com.wohlig.blazennative.Adapters.ImageGridAdapter;
 import com.wohlig.blazennative.HttpCall.HttpCall;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.InternetOperations;
-import com.wohlig.blazennative.ViewPagerActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,11 +45,18 @@ public class PhotoGridFragment extends Fragment {
     private int columnWidth;
     private ArrayList<String> imageLinks = new ArrayList<String>();
     private ProgressBar progressBar;
+    private TextView tvNoImages;
+    private boolean noImages = false;
+    private static String albumId = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_photo_grid, container, false);
+
+        //((MainActivity) this.getActivity()).setToolbarText("IMAGE");
+
+        albumId = ((MainActivity) this.getActivity()).getAlbumId();
 
         activity = getActivity();
 
@@ -58,6 +67,7 @@ public class PhotoGridFragment extends Fragment {
 
     private void initilizeViews() {
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        tvNoImages = (TextView) view.findViewById(R.id.tvNoImages);
 
         gvImages = (GridView) view.findViewById(R.id.glImages);
         Resources r = getResources();
@@ -85,7 +95,7 @@ public class PhotoGridFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(activity, ViewPagerActivity.class);
+                Intent intent = new Intent(activity, ViewPagerSliderActivity.class);
                 intent.putExtra("position", String.valueOf(position));
                 intent.putExtra("imageLinks", imageLinks);
                 startActivity(intent);
@@ -108,7 +118,7 @@ public class PhotoGridFragment extends Fragment {
                 }
                 String response;
                 JSONArray jsonArray = null;
-                String albumId = "7";
+                //String albumId = "7";
 
                 try {
                     response = HttpCall.getDataGet(InternetOperations.SERVER_URL + "image/getAlbumImages?id=" + albumId);
@@ -132,6 +142,7 @@ public class PhotoGridFragment extends Fragment {
 
                         } else {
                             done = true;
+                            noImages = true;
                         }
                     } else {                                    //no internet and no cached copy also found in database
                         noInternet = true;
@@ -179,16 +190,19 @@ public class PhotoGridFragment extends Fragment {
     }
 
     private void refresh() {
-
-        imageGridAdapter = new ImageGridAdapter(activity, imageLinks, columnWidth);
-        gvImages.setAdapter(imageGridAdapter);
+        if (noImages) {
+            tvNoImages.setVisibility(View.VISIBLE);
+        } else {
+            imageGridAdapter = new ImageGridAdapter(activity, imageLinks, columnWidth);
+            gvImages.setAdapter(imageGridAdapter);
+        }
     }
 
     private void populateImages(int position, String image, String text) {
-        if(image.equals("") || image.isEmpty())
+        if (image.equals("") || image.isEmpty())
             image = "null";
 
-        if(text.equals("") || text.isEmpty())
+        if (text.equals("") || text.isEmpty())
             text = "null";
 
         imageLinks.add(image + "!!!" + text);

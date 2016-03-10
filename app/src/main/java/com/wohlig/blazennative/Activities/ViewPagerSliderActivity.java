@@ -1,4 +1,4 @@
-package com.wohlig.blazennative;
+package com.wohlig.blazennative.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,12 +13,13 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.wohlig.blazennative.Adapters.ViewPagerAdapter;
 import com.wohlig.blazennative.CustomViews.Photoview.PhotoView;
+import com.wohlig.blazennative.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ViewPagerActivity extends Activity {
+public class ViewPagerSliderActivity extends Activity {
     private static String TAG = "BLAZEN";
     private ViewPager mViewPager;
     private ViewPagerAdapter viewPagerAdapter;

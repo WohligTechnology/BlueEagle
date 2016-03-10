@@ -1,4 +1,4 @@
-package com.wohlig.blazennative;
+package com.wohlig.blazennative.Navigation;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.wohlig.blazennative.R;
 
 import java.util.ArrayList;
 import java.util.List;

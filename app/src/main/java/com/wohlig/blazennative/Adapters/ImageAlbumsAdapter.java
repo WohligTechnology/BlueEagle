@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.wohlig.blazennative.POJOs.ImageAlbumsPojo;
@@ -35,7 +34,9 @@ public class ImageAlbumsAdapter extends RecyclerView.Adapter<ImageAlbumsAdapter.
     @Override
     public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
         final ImageAlbumsPojo iap = imageAlbumsPojoList.get(i);
-        customViewHolder.llImageAlbumCard.setTag(iap.getId());
+        String tag = iap.getId()+"!!!"+iap.getTitle();
+
+        customViewHolder.llImageAlbumCard.setTag(tag);
 
         if (!iap.getImageUrl().isEmpty()) {
             Picasso.with(iap.getContext())
@@ -44,12 +45,12 @@ public class ImageAlbumsAdapter extends RecyclerView.Adapter<ImageAlbumsAdapter.
         }
         customViewHolder.tvTitle.setText(iap.getTitle());
 
-        customViewHolder.llImageAlbumCard.setOnClickListener(new View.OnClickListener() {
+        /*customViewHolder.llImageAlbumCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(iap.getContext(), v.getTag().toString(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
 
         /*Animation animation = AnimationUtils.loadAnimation(iap.getContext(), (i > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);

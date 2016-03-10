@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.wohlig.blazennative.HttpCall.HttpCall;
-import com.wohlig.blazennative.MainActivity;
+import com.wohlig.blazennative.Activities.MainActivity;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.InternetOperations;
 

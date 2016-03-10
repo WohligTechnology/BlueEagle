@@ -1,4 +1,4 @@
-package com.wohlig.blazennative;
+package com.wohlig.blazennative.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
+import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.WebViewController;
 
 public class WebActivity extends AppCompatActivity {
