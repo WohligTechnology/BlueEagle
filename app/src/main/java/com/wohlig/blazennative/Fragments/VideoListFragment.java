@@ -15,9 +15,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.wohlig.blazennative.Activities.MainActivity;
-import com.wohlig.blazennative.Adapters.VideoAlbumsAdapter;
+import com.wohlig.blazennative.Adapters.VideoListAdapter;
 import com.wohlig.blazennative.HttpCall.HttpCall;
-import com.wohlig.blazennative.POJOs.VideoAlbumsPojo;
+import com.wohlig.blazennative.POJOs.VideoListPojo;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.InternetOperations;
 
@@ -28,22 +28,24 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideoFragment extends Fragment {
-
+public class VideoListFragment extends Fragment {
     private View view;
     private static Activity activity;
     private static String TAG = "BLAZEN";
     private static ProgressBar progressBar;
-    private RecyclerView rvVideoAlbum;
-    private List<VideoAlbumsPojo> listAlbums;
-    private VideoAlbumsAdapter videoAlbumsAdapter;
+    private RecyclerView rvVideoList;
+    private List<VideoListPojo> listVideos;
+    private VideoListAdapter videoListAdapter;
+    private String id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_video, container, false);
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_video_list, container, false);
 
         ((MainActivity) this.getActivity()).setToolbarText("VIDEO");
+        id = ((MainActivity) this.getActivity()).getId();
 
         activity = getActivity();
 
@@ -54,17 +56,17 @@ public class VideoFragment extends Fragment {
 
     private void initilizeViews() {
 
-        rvVideoAlbum = (RecyclerView) view.findViewById(R.id.rvVideoAlbum);
+        rvVideoList = (RecyclerView) view.findViewById(R.id.rvVideoList);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-        listAlbums = new ArrayList<VideoAlbumsPojo>();
+        listVideos = new ArrayList<VideoListPojo>();
 
-        videoAlbumsAdapter = new VideoAlbumsAdapter(listAlbums);
-        rvVideoAlbum.setAdapter(videoAlbumsAdapter);
+        videoListAdapter = new VideoListAdapter(listVideos);
+        rvVideoList.setAdapter(videoListAdapter);
 
         LinearLayoutManager llm = new LinearLayoutManager(activity);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        rvVideoAlbum.setLayoutManager(llm);
+        rvVideoList.setLayoutManager(llm);
 
         //rvVideoAlbum.addItemDecoration(new SpacesItemDecoration(Size.dpToPx(activity, 10)));
 
@@ -88,7 +90,7 @@ public class VideoFragment extends Fragment {
                 JSONArray jsonArray;
 
                 try {
-                    response = HttpCall.getDataGet(InternetOperations.SERVER_URL + "video/getAllAlbums");
+                    response = HttpCall.getDataGet(InternetOperations.SERVER_URL + "video/getAlbumVideos?id=" + id);
                     if (!response.equals("")) {                 //check is the response empty
                         jsonArray = new JSONArray(response);
 
@@ -96,16 +98,13 @@ public class VideoFragment extends Fragment {
 
                             for (int i = 0; i < jsonArray.length(); i++) {
 
-                                String id = null, image = null, title = null, subTitle = null;
+                                String videoId = null, link = null, title = null;
 
                                 JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
-
-                                id = jsonObject.optString("id");
-                                image = jsonObject.optString("image");
+                                videoId = jsonObject.optString("id");
                                 title = jsonObject.optString("title");
-                                subTitle = jsonObject.optString("subtitle");
 
-                                populateAlbums(id, image, title, subTitle);
+                                populateVideoList(videoId, link, title);
                             }
                             done = true;
 
@@ -139,18 +138,18 @@ public class VideoFragment extends Fragment {
         }.execute(null, null, null);
     }
 
-    public void populateAlbums(String id, String image, String title, String subTitle) {
+    public void populateVideoList(String videoId, String link, String title) {
 
-        VideoAlbumsPojo vap = new VideoAlbumsPojo();
-        vap.setId(id);
-        vap.setImageUrl(image);
+        VideoListPojo vap = new VideoListPojo();
+        vap.setVideoId(videoId);
         vap.setTitle(title);
-        vap.setSubTitle(subTitle);
         vap.setContext(activity);
-        listAlbums.add(vap);
+        listVideos.add(vap);
     }
 
     private void refresh() {
-        videoAlbumsAdapter.notifyDataSetChanged();
+        videoListAdapter.notifyDataSetChanged();
     }
+
+
 }

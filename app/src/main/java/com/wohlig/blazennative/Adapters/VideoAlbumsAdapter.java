@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.wohlig.blazennative.POJOs.VideoAlbumsPojo;
@@ -44,13 +43,6 @@ public class VideoAlbumsAdapter extends RecyclerView.Adapter<VideoAlbumsAdapter.
         customViewHolder.tvTitle.setText(vap.getTitle());
         customViewHolder.tvDesc.setText(vap.getSubTitle());
 
-        customViewHolder.llVideoAlbumCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(vap.getContext(), v.getTag().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
         /*Animation animation = AnimationUtils.loadAnimation(iap.getContext(), (i > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
         customViewHolder.itemView.startAnimation(animation);
@@ -74,7 +66,7 @@ public class VideoAlbumsAdapter extends RecyclerView.Adapter<VideoAlbumsAdapter.
         public CustomViewHolder(View v) {
             super(v);
             llVideoAlbumCard = (LinearLayout) v.findViewById(R.id.llVideoAlbumCard);
-            ivImage = (ImageView) v.findViewById(R.id.ivImage);
+            ivImage = (ImageView) v.findViewById(R.id.ivThumbnail);
             tvTitle = (TextView) v.findViewById(R.id.tvTitle);
             tvDesc = (TextView) v.findViewById(R.id.tvDesc);
         }

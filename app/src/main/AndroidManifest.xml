@@ -41,8 +41,12 @@
         <activity
             android:name=".Activities.ViewPagerSliderActivity"
             android:label="@string/title_activity_view_pager"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name=".Activities.PlayVideoActivity"
+            android:label="@string/title_activity_play_video"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
     </application>
 

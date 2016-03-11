@@ -13,9 +13,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wohlig.blazennative.Fragments.BlogFragment;
 import com.wohlig.blazennative.Fragments.PhotoGridFragment;
 import com.wohlig.blazennative.Fragments.SingleBlogFragment;
+import com.wohlig.blazennative.Fragments.VideoFragment;
+import com.wohlig.blazennative.Fragments.VideoListFragment;
 import com.wohlig.blazennative.Navigation.NavigationDrawerCallbacks;
 import com.wohlig.blazennative.Navigation.NavigationDrawerFragment;
 import com.wohlig.blazennative.R;
@@ -30,9 +31,8 @@ public class MainActivity extends ActionBarActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
-    public static TextView tvTitle;
-    public static String ID;
-    public static String TITLE;
+    private static TextView tvTitle;
+    private static String ID;
     private boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity
     public void show() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        BlogFragment fragment = new BlogFragment();
+        VideoFragment fragment = new VideoFragment();
 
         //fragmentTransaction.add(R.id.container, homeFragment, "HOME");
         fragmentTransaction.replace(R.id.container, fragment);
@@ -143,12 +143,7 @@ public class MainActivity extends ActionBarActivity
 
     public void goToSingleBlog(View v){
         String id = v.getTag().toString();
-        /*List<String> info = Arrays.asList(tag.split("!!!"));
-
-        String id = info.get(0);
-        String title = info.get(1);*/
         setId(id);
-        //setToolbarText(title);
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -160,4 +155,17 @@ public class MainActivity extends ActionBarActivity
         fragmentTransaction.commit();
     }
 
+    public void goToVideoList(View v){
+        String id = v.getTag().toString();
+        setId(id);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        VideoListFragment fragment = new VideoListFragment();
+
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 }

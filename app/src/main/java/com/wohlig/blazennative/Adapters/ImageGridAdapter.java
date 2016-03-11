@@ -67,7 +67,7 @@ public class ImageGridAdapter extends BaseAdapter {
 
             convertView = inflater.inflate(R.layout.layout_image_grid, null); //change the name of the layout
 
-            holder.imageView = (ImageView) convertView.findViewById(R.id.ivImage);          //find the different Views
+            holder.imageView = (ImageView) convertView.findViewById(R.id.ivThumbnail);          //find the different Views
             holder.llSingleImage = (LinearLayout) convertView.findViewById(R.id.llSingleImage);
             holder.llSingleImage.setLayoutParams(new GridView.LayoutParams(imageWidth, imageWidth));
 
