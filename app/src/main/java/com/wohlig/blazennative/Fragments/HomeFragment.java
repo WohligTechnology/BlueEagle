@@ -29,7 +29,7 @@ import java.util.ArrayList;
 /**
  * Created by Jay on 23-02-2016.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
     private View view;
     private static final String MIME_TYPE = "text/html";
     private static final String ENCODING = "UTF-8";

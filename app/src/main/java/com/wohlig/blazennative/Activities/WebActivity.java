@@ -11,7 +11,6 @@ import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.WebViewController;
 
 public class WebActivity extends AppCompatActivity {
-
     WebView webview;
     String webLink;
     ImageView ivBack;
@@ -25,7 +24,7 @@ public class WebActivity extends AppCompatActivity {
         initilizeViews();
     }
 
-    public void initilizeViews(){
+    public void initilizeViews() {
 
         webview = (WebView) findViewById(R.id.webview);
         webview.setWebViewClient(new WebViewController());
@@ -47,7 +46,8 @@ public class WebActivity extends AppCompatActivity {
         if (webview.canGoBack()) {
             webview.goBack();
         } else {
-            super.onBackPressed();
+            webview.destroy();
+            finish();
         }
     }
 
