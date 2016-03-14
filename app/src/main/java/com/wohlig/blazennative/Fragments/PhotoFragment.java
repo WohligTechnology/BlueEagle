@@ -2,9 +2,7 @@ package com.wohlig.blazennative.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,9 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.wohlig.blazennative.ARC.Http.HttpCallback;
+import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
 import com.wohlig.blazennative.Adapters.ImageAlbumsAdapter;
-import com.wohlig.blazennative.HttpCall.HttpCall;
 import com.wohlig.blazennative.POJOs.ImageAlbumsPojo;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.InternetOperations;
@@ -37,6 +36,7 @@ public class PhotoFragment extends Fragment {
     private static ProgressBar progressBar;
     private RecyclerView rvImageAlbum;
     private List<ImageAlbumsPojo> listAlbums;
+    private ImageAlbumsAdapter imageAlbumsAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,14 +60,13 @@ public class PhotoFragment extends Fragment {
 
         listAlbums = new ArrayList<ImageAlbumsPojo>();
 
-
         LinearLayoutManager llm = new LinearLayoutManager(activity);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvImageAlbum.setLayoutManager(llm);
 
         rvImageAlbum.addItemDecoration(new SpacesItemDecoration(Size.dpToPx(activity, 10)));
 
-        ImageAlbumsAdapter imageAlbumsAdapter = new ImageAlbumsAdapter(listAlbums);
+        imageAlbumsAdapter = new ImageAlbumsAdapter(listAlbums);
         rvImageAlbum.setAdapter(imageAlbumsAdapter);
 
         getContent();
@@ -75,69 +74,59 @@ public class PhotoFragment extends Fragment {
 
     private void getContent() {
 
-        new AsyncTask<Void, Void, String>() {
-            boolean done = false;
-            boolean noInternet = false;
-
+        HttpCallback.get(new HttpInterface() {
             @Override
-            protected String doInBackground(Void... params) {
-
-                if (Looper.myLooper() == null) {
-                    Looper.prepare();
-                }
-                String response;
-
-                JSONArray jsonArray;
-
-                try {
-                    response = HttpCall.getDataGet(InternetOperations.SERVER_URL + "image/getAllAlbums");
-                    if (!response.equals("")) {                 //check is the response empty
-                        jsonArray = new JSONArray(response);
-
-                        if (jsonArray.length() > 0) {
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-
-                                String id = null, image = null, title = null;
-
-                                JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
-
-                                id = jsonObject.optString("id");
-                                image = jsonObject.optString("image");
-                                title = jsonObject.optString("title");
-
-                                populateAlbums(id, image, title);
-                            }
-                            done = true;
-
-                        } else {
-                            done = true;
-                        }
-                    } else {                                    //no internet and no cached copy also found in database
-                        noInternet = true;
-                    }
-
-                } catch (JSONException je) {
-                    Log.e(TAG, Log.getStackTraceString(je));
-                } catch (Exception e) {
-                    Log.e(TAG, Log.getStackTraceString(e));
-                }
-
-                return null;
+            public void refreshView(String response) {
+                progressBar.setVisibility(View.VISIBLE);
+                json(response);
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            public void noInternet() {
                 progressBar.setVisibility(View.GONE);
-                if (done) {                         //everything went fine
-                    refresh();
-                } else if (noInternet) {            //if no internet and no cached copy found in database
-                    Toast.makeText(activity, "No internet!", Toast.LENGTH_SHORT).show();
-                } else {                            //some error
-                    Toast.makeText(activity, "Oops, Something went wrong!", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(activity, "No Internet Connection!", Toast.LENGTH_SHORT).show();
             }
-        }.execute(null, null, null);
+
+            @Override
+            public void error() {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(activity, "Oops! Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        }, InternetOperations.SERVER_URL + "image/getAllAlbums");
+    }
+
+    private void json(String response) {
+
+        JSONArray jsonArray;
+
+        try {
+            if (!response.equals("")) {                 //check is the response empty
+                jsonArray = new JSONArray(response);
+
+                listAlbums.clear();
+                if (jsonArray.length() > 0) {
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        String id = null, image = null, title = null;
+
+                        JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
+
+                        id = jsonObject.optString("id");
+                        image = jsonObject.optString("image");
+                        title = jsonObject.optString("title");
+
+                        populateAlbums(id, image, title);
+                    }
+                }
+                resetViews();
+            }
+
+        } catch (JSONException je) {
+            Log.e(TAG, Log.getStackTraceString(je));
+        } catch (Exception e) {
+            Log.e(TAG, Log.getStackTraceString(e));
+        }
     }
 
     public void populateAlbums(String id, String image, String title) {
@@ -150,9 +139,9 @@ public class PhotoFragment extends Fragment {
         listAlbums.add(iap);
     }
 
-    private void refresh() {
-        ImageAlbumsAdapter imageAlbumsAdapter = new ImageAlbumsAdapter(listAlbums);
-        rvImageAlbum.setAdapter(imageAlbumsAdapter);
+    private void resetViews() {
+        imageAlbumsAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
     }
 
 }

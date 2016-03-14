@@ -68,7 +68,6 @@ public class HomeFragment extends Fragment {
         HttpCallback.get(new HttpInterface() {
             @Override
             public void refreshView(String response) {
-                Log.e(TAG, response);
                 progressBar.setVisibility(View.VISIBLE);
                 json(response);
             }
@@ -90,11 +89,9 @@ public class HomeFragment extends Fragment {
 
     private void json(String response) {
 
-
         JSONObject jsonObject = null;
 
         try {
-
             if (!response.equals("")) {                 //check is the response empty
                 jsonObject = new JSONObject(response);
 
@@ -113,13 +110,12 @@ public class HomeFragment extends Fragment {
                                 sliderImageList.add(sliderArray.get(i).toString());
                             }
                         }
-                        resetViews();
-
                     } catch (JSONException je) {
                         Log.e(TAG, Log.getStackTraceString(je));
                     }
-
                 }
+
+                resetViews();
             }
         } catch (JSONException je) {
             Log.e(TAG, Log.getStackTraceString(je));
@@ -145,6 +141,8 @@ public class HomeFragment extends Fragment {
         if (!html.equals("") || !html.isEmpty()) {
             webView.loadDataWithBaseURL("", html, MIME_TYPE, ENCODING, "");
             webView.setVisibility(View.VISIBLE);
+        } else {
+            webView.setVisibility(View.GONE);
         }
 
         if (!sliderImageList.isEmpty()) {
@@ -152,6 +150,8 @@ public class HomeFragment extends Fragment {
                 addSliderImage(sliderImageList.get(i));
             }
             sliderView.setVisibility(View.VISIBLE);
+        } else {
+            sliderView.setVisibility(View.GONE);
         }
 
         progressBar.setVisibility(View.GONE);
