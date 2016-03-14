@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wohlig.blazennative.Fragments.HomeFragment;
 import com.wohlig.blazennative.Fragments.PhotoGridFragment;
 import com.wohlig.blazennative.Fragments.SingleBlogFragment;
-import com.wohlig.blazennative.Fragments.VideoFragment;
 import com.wohlig.blazennative.Fragments.VideoListFragment;
 import com.wohlig.blazennative.Navigation.NavigationDrawerCallbacks;
 import com.wohlig.blazennative.Navigation.NavigationDrawerFragment;
@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity
     public void show() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        VideoFragment fragment = new VideoFragment();
+        HomeFragment fragment = new HomeFragment();
 
         //fragmentTransaction.add(R.id.container, homeFragment, "HOME");
         fragmentTransaction.replace(R.id.container, fragment);
