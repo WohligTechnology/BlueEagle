@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wohlig.blazennative.Fragments.PhotoFragment;
+import com.wohlig.blazennative.Fragments.ArticleFragment;
 import com.wohlig.blazennative.Fragments.PhotoGridFragment;
 import com.wohlig.blazennative.Fragments.SingleBlogFragment;
 import com.wohlig.blazennative.Fragments.VideoListFragment;
@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity
     public void show() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        PhotoFragment fragment = new PhotoFragment();
+        ArticleFragment fragment = new ArticleFragment();
 
         //fragmentTransaction.add(R.id.container, homeFragment, "HOME");
         fragmentTransaction.replace(R.id.container, fragment);

@@ -2,9 +2,7 @@ package com.wohlig.blazennative.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.wohlig.blazennative.HttpCall.HttpCall;
+import com.wohlig.blazennative.ARC.Http.HttpCallback;
+import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.InternetOperations;
@@ -36,6 +35,7 @@ public class ArticleFragment extends Fragment {
     private String html, bannerUrl, title;
     private ImageView ivBanner;
     private TextView tvTitle;
+    private String id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +43,7 @@ public class ArticleFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_article, container, false);
         activity = getActivity();
 
+        id = "7";
         ((MainActivity) this.getActivity()).setToolbarText("About");
         initilizeViews();
 
@@ -61,64 +62,56 @@ public class ArticleFragment extends Fragment {
 
     private void getContent() {
 
-        new AsyncTask<Void, Void, String>() {
-            boolean done = false;
-            boolean noInternet = false;
-
+        HttpCallback.get(new HttpInterface() {
             @Override
-            protected String doInBackground(Void... params) {
-
-                if (Looper.myLooper() == null) {
-                    Looper.prepare();
-                }
-                String response;
-                JSONObject jsonObject = null;
-                String id = "7";
-                String url = InternetOperations.SERVER_URL + "article/get?id=" + id;
-
-                try {
-                    response = HttpCall.getDataGet(url);
-
-                    if (!response.equals("")) {                 //check is the response empty
-                        jsonObject = new JSONObject(response);
-
-                        html = jsonObject.optString("content");
-                        bannerUrl = jsonObject.optString("banner");
-                        title = jsonObject.optString("title");
-
-                        done = true;
-
-                    } else {                                    //no internet and no cached copy also found in database
-                        noInternet = true;
-                    }
-                } catch (JSONException je) {
-                    Log.e(TAG, Log.getStackTraceString(je));
-                } catch (Exception e) {
-                    Log.e(TAG, Log.getStackTraceString(e));
-                }
-
-                return null;
+            public void refreshView(String response) {
+                progressBar.setVisibility(View.VISIBLE);
+                json(response);
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            public void noInternet() {
                 progressBar.setVisibility(View.GONE);
-                if (done) {                         //everything went fine
-                    refresh();
-                } else if (noInternet) {            //if no internet and no cached copy found in database
-                    Toast.makeText(activity, "No internet!", Toast.LENGTH_SHORT).show();
-                } else {                            //some error
-                    Toast.makeText(activity, "Oops, Something went wrong!", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(activity, "No Internet Connection!", Toast.LENGTH_SHORT).show();
             }
-        }.execute(null, null, null);
+
+            @Override
+            public void error() {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(activity, "Oops! Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        }, InternetOperations.SERVER_URL + "article/get?id=" + id);
+
     }
 
-    private void refresh() {
+    private void json(String response){
+        JSONObject jsonObject = null;
+
+        try {
+            if (!response.equals("")) {                 //check is the response empty
+                jsonObject = new JSONObject(response);
+
+                html = jsonObject.optString("content");
+                bannerUrl = jsonObject.optString("banner");
+                title = jsonObject.optString("title");
+
+                resetViews();
+            }
+        } catch (JSONException je) {
+            Log.e(TAG, Log.getStackTraceString(je));
+        } catch (Exception e) {
+            Log.e(TAG, Log.getStackTraceString(e));
+        }
+    }
+
+
+    private void resetViews() {
 
         if (!html.equals("") || !html.isEmpty()) {
             webView.loadDataWithBaseURL("", html, MIME_TYPE, ENCODING, "");
             webView.setVisibility(View.VISIBLE);
+        } else {
+            webView.setVisibility(View.GONE);
         }
 
         if (!bannerUrl.equals("") || !bannerUrl.isEmpty()) {
@@ -128,12 +121,18 @@ public class ArticleFragment extends Fragment {
                     //.error(R.drawable.ic_error_fallback)         // optional
                     .into(ivBanner);
             ivBanner.setVisibility(View.VISIBLE);
+        } else {
+            ivBanner.setVisibility(View.GONE);
         }
 
         if (!title.equals("") || !title.isEmpty()) {
             tvTitle.setText(title);
             tvTitle.setVisibility(View.VISIBLE);
+        } else {
+            tvTitle.setVisibility(View.GONE);
         }
+
+        progressBar.setVisibility(View.GONE);
 
     }
 
