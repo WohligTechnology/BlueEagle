@@ -1,28 +1,30 @@
-package com.wohlig.blazennative.Database;
+package com.wohlig.blazennative.ARC.db;
 
 import com.orm.SugarRecord;
 
 /**
  * Created by Jay on 18-02-2016.
  */
-public class CacheResponse extends SugarRecord{
+public class CacheResponse extends SugarRecord {
 
     public String url;
     public String postData;
     public String response;
     public long time;
     public int count;
+    public String hash;
 
     public CacheResponse() {
         super();
     }
 
-    public CacheResponse(String url,String postData, String response, long time, int count) {
+    public CacheResponse(String url,String postData, String response, long time, int count, String hash) {
         this.postData = postData;
         this.response = response;
         this.url = url;
         this.time = time;
         this.count = count;
+        this.hash = hash;
     }
 
     public String getPostData() {
@@ -63,5 +65,13 @@ public class CacheResponse extends SugarRecord{
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 }

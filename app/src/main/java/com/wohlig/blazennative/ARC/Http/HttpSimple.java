@@ -1,4 +1,4 @@
-package com.wohlig.blazennative.HttpCall;
+package com.wohlig.blazennative.ARC.Http;
 
 import android.util.Log;
 
@@ -18,15 +18,15 @@ import okhttp3.Response;
 /**
  * Created by Jay on 18-02-2016.
  */
-public class HttpCall {
+public class HttpSimple {
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static OkHttpClient client = new OkHttpClient();
     private static String TAG = "ARC";
-    private static final String POST_NULL = "-1";
+    private static final String POST_NULL = "-1";   //Do not change. Will remain -1 in case of Get request
     private static int HTTP_CODE;
-    private static final int MAX_LINKS_CACHE = 10;   //Maximum number of links to be cached in the database
+    private static final int MAX_LINKS_CACHE = 2;   //Maximum number of links to be cached in the database
 
-    public static String getDataPost(String url, String postJson) {
+    public static String postRequest(String url, String postJson) {
 
         String response = "";
         if (hasInternet()) { //if user is connected to internet
@@ -77,7 +77,7 @@ public class HttpCall {
         return response;
     }
 
-    public static String getDataGet(String url) {
+    public static String getRequest(String url) {
 
         String response = "";
         if (hasInternet()) { //if user is connected to internet
