@@ -1,10 +1,34 @@
 package com.wohlig.blazennative.Fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.wohlig.blazennative.ARC.Http.HttpCallback;
+import com.wohlig.blazennative.ARC.Http.HttpInterface;
+import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Adapters.EventListAdapter;
+import com.wohlig.blazennative.POJOs.EventListPojo;
+import com.wohlig.blazennative.R;
+import com.wohlig.blazennative.Util.InternetOperations;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventFragment extends Fragment {
-
-    /*private View view;
+    private View view;
     private static Activity activity;
     private static String TAG = "BLAZEN";
     private static ProgressBar progressBar;
@@ -26,20 +50,19 @@ public class EventFragment extends Fragment {
         return view;
     }
 
-
     private void initilizeViews() {
 
-        rvVideoAlbum = (RecyclerView) view.findViewById(R.id.rvVideoAlbum);
+        rvEventList = (RecyclerView) view.findViewById(R.id.rvEventList);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-        listAlbums = new ArrayList<VideoAlbumsPojo>();
+        listEventList = new ArrayList<EventListPojo>();
 
-        videoAlbumsAdapter = new VideoAlbumsAdapter(listAlbums);
-        rvVideoAlbum.setAdapter(videoAlbumsAdapter);
+        eventListAdapter = new EventListAdapter(listEventList);
+        rvEventList.setAdapter(eventListAdapter);
 
         LinearLayoutManager llm = new LinearLayoutManager(activity);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        rvVideoAlbum.setLayoutManager(llm);
+        rvEventList.setLayoutManager(llm);
 
         //rvVideoAlbum.addItemDecoration(new SpacesItemDecoration(Size.dpToPx(activity, 10)));
 
@@ -48,84 +71,78 @@ public class EventFragment extends Fragment {
 
     private void getContent() {
 
-        new AsyncTask<Void, Void, String>() {
-            boolean done = false;
-            boolean noInternet = false;
-
+        HttpCallback.get(new HttpInterface() {
             @Override
-            protected String doInBackground(Void... params) {
-
-                if (Looper.myLooper() == null) {
-                    Looper.prepare();
-                }
-                String response;
-
-                JSONArray jsonArray;
-
-                try {
-                    response = HttpCall.getDataGet(InternetOperations.SERVER_URL + "video/getAllAlbums");
-                    if (!response.equals("")) {                 //check is the response empty
-                        jsonArray = new JSONArray(response);
-
-                        if (jsonArray.length() > 0) {
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-
-                                String id = null, image = null, title = null, subTitle = null;
-
-                                JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
-
-                                id = jsonObject.optString("id");
-                                image = jsonObject.optString("image");
-                                title = jsonObject.optString("title");
-                                subTitle = jsonObject.optString("subtitle");
-
-                                populateAlbums(id, image, title, subTitle);
-                            }
-                            done = true;
-
-                        } else {
-                            done = true;
-                        }
-                    } else {                                    //no internet and no cached copy also found in database
-                        noInternet = true;
-                    }
-
-                } catch (JSONException je) {
-                    Log.e(TAG, Log.getStackTraceString(je));
-                } catch (Exception e) {
-                    Log.e(TAG, Log.getStackTraceString(e));
-                }
-
-                return null;
+            public void refreshView(String response) {
+                progressBar.setVisibility(View.VISIBLE);
+                json(response);
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            public void noInternet() {
                 progressBar.setVisibility(View.GONE);
-                if (done) {                         //everything went fine
-                    refresh();
-                } else if (noInternet) {            //if no internet and no cached copy found in database
-                    Toast.makeText(activity, "No internet!", Toast.LENGTH_SHORT).show();
-                } else {                            //some error
-                    Toast.makeText(activity, "Oops, Something went wrong!", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(activity, "No Internet Connection!", Toast.LENGTH_SHORT).show();
             }
-        }.execute(null, null, null);
+
+            @Override
+            public void error() {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(activity, "Oops! Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        }, InternetOperations.SERVER_URL + "event/getAll");
+
+
     }
 
-    public void populateAlbums(String id, String image, String title, String subTitle) {
+    private void json(String response) {
 
-        VideoAlbumsPojo vap = new VideoAlbumsPojo();
-        vap.setId(id);
-        vap.setImageUrl(image);
-        vap.setTitle(title);
-        vap.setSubTitle(subTitle);
-        vap.setContext(activity);
-        listAlbums.add(vap);
+        JSONArray jsonArray;
+
+        try {
+            if (!response.equals("")) {                 //check is the response empty
+                jsonArray = new JSONArray(response);
+
+                if (jsonArray.length() > 0) {
+                    listEventList.clear();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        String id = null, imageUrl = null, title = null, date = null, time = null;
+
+                        JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
+
+                        id = jsonObject.optString("id");
+                        imageUrl = jsonObject.optString("image");
+                        title = jsonObject.optString("title");
+                        date = jsonObject.optString("date");
+                        time = jsonObject.optString("time");
+
+                        populateEvents(id, imageUrl, title, date, time);
+                    }
+                }
+                resetViews();
+            }
+
+        } catch (JSONException je) {
+            Log.e(TAG, Log.getStackTraceString(je));
+        } catch (Exception e) {
+            Log.e(TAG, Log.getStackTraceString(e));
+        }
     }
 
-    private void refresh() {
-        videoAlbumsAdapter.notifyDataSetChanged();
-    }*/
+    public void populateEvents(String id, String imageUrl, String title, String date, String time) {
+
+        EventListPojo elp = new EventListPojo();
+        elp.setId(id);
+        elp.setImageUrl(imageUrl);
+        elp.setTitle(title);
+        elp.setDate(date);
+        elp.setTime(time);
+        elp.setContext(activity);
+        listEventList.add(elp);
+    }
+
+    private void resetViews() {
+        eventListAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
+    }
 }

@@ -13,9 +13,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wohlig.blazennative.Fragments.BlogFragment;
+import com.wohlig.blazennative.Fragments.EventFragment;
 import com.wohlig.blazennative.Fragments.PhotoGridFragment;
 import com.wohlig.blazennative.Fragments.SingleBlogFragment;
+import com.wohlig.blazennative.Fragments.SingleEventFragment;
 import com.wohlig.blazennative.Fragments.VideoListFragment;
 import com.wohlig.blazennative.Navigation.NavigationDrawerCallbacks;
 import com.wohlig.blazennative.Navigation.NavigationDrawerFragment;
@@ -56,7 +57,7 @@ public class MainActivity extends ActionBarActivity
     public void show() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        BlogFragment fragment = new BlogFragment();
+        EventFragment fragment = new EventFragment();
 
         //fragmentTransaction.add(R.id.container, homeFragment, "HOME");
         fragmentTransaction.replace(R.id.container, fragment);
@@ -162,6 +163,20 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         VideoListFragment fragment = new VideoListFragment();
+
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    public void goToSingleEvent(View v){
+        String id = v.getTag().toString();
+        setId(id);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        SingleEventFragment fragment = new SingleEventFragment();
 
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

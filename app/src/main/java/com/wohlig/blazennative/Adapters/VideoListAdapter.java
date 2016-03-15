@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import com.wohlig.blazennative.Activities.PlayVideoActivity;
 import com.wohlig.blazennative.POJOs.VideoListPojo;
 import com.wohlig.blazennative.R;
+import com.wohlig.blazennative.Util.Youtube;
 
 import java.util.List;
 
@@ -40,9 +41,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Cust
         String youtubeId = vlp.getVideoId();
 
         if (!youtubeId.isEmpty()) {
-            final String playLink = "https://www.youtube.com/embed/" + youtubeId + "?autoplay=1&modestbranding=1&showinfo=0&rel=0&loop=1";
 
-            final String thumbnail = "http://img.youtube.com/vi/" + youtubeId + "/0.jpg";
+            final String playLink = Youtube.getUrl(youtubeId);
+            final String thumbnail = Youtube.getThumbnail(youtubeId);
 
             final Context context = vlp.getContext();
             //customViewHolder.llVideoListCard.setTag(playLink);
