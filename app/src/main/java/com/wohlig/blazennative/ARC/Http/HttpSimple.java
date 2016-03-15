@@ -155,7 +155,7 @@ public class HttpSimple {
         }
     }
 
-    private static String post(String url, String json) throws IOException {
+    public static String post(String url, String json) throws IOException {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
