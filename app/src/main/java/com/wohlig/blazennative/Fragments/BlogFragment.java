@@ -2,9 +2,7 @@ package com.wohlig.blazennative.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,9 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.wohlig.blazennative.ARC.Http.HttpCallback;
+import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
 import com.wohlig.blazennative.Adapters.BlogAdapter;
-import com.wohlig.blazennative.HttpCall.HttpCall;
 import com.wohlig.blazennative.POJOs.BlogPojo;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.InternetOperations;
@@ -70,76 +69,67 @@ public class BlogFragment extends Fragment {
 
     private void getContent() {
 
-        new AsyncTask<Void, Void, String>() {
-            boolean done = false;
-            boolean noInternet = false;
-
+        HttpCallback.get(new HttpInterface() {
             @Override
-            protected String doInBackground(Void... params) {
-
-                if (Looper.myLooper() == null) {
-                    Looper.prepare();
-                }
-                String response;
-
-                JSONArray jsonArray;
-
-                try {
-                    response = HttpCall.getDataGet(InternetOperations.SERVER_URL + "blog/getAll");
-                    if (!response.equals("")) {                 //check is the response empty
-
-                        if(!listBlogs.isEmpty()){
-                            listBlogs.clear();
-                        }
-
-                        jsonArray = new JSONArray(response);
-
-                        if (jsonArray.length() > 0) {
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-
-                                String id = null, title = null, time = null, desc = null, userIcon = null;
-
-                                JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
-
-                                id = jsonObject.optString("id");
-                                title = jsonObject.optString("title");
-                                time = jsonObject.optString("time");
-                                desc = jsonObject.optString("desc");
-                                userIcon = jsonObject.optString("userIcon");
-
-                                populateBlog(id, title, time, desc, userIcon);
-                            }
-                            done = true;
-
-                        } else {
-                            done = true;
-                        }
-                    } else {                                    //no internet and no cached copy also found in database
-                        noInternet = true;
-                    }
-
-                } catch (JSONException je) {
-                    Log.e(TAG, Log.getStackTraceString(je));
-                } catch (Exception e) {
-                    Log.e(TAG, Log.getStackTraceString(e));
-                }
-
-                return null;
+            public void refreshView(String response) {
+                progressBar.setVisibility(View.VISIBLE);
+                json(response);
             }
 
             @Override
-            protected void onPostExecute(String s) {
+            public void noInternet() {
                 progressBar.setVisibility(View.GONE);
-                if (done) {                         //everything went fine
-                    refresh();
-                } else if (noInternet) {            //if no internet and no cached copy found in database
-                    Toast.makeText(activity, "No internet!", Toast.LENGTH_SHORT).show();
-                } else {                            //some error
-                    Toast.makeText(activity, "Oops, Something went wrong!", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(activity, "No Internet Connection!", Toast.LENGTH_SHORT).show();
             }
-        }.execute(null, null, null);
+
+            @Override
+            public void error() {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(activity, "Oops! Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        }, InternetOperations.SERVER_URL + "blog/getAll");
+
+    }
+
+    private void json(String response) {
+        JSONArray jsonArray;
+
+        try {
+            if (!response.equals("")) {                 //check is the response empty
+
+                if (!listBlogs.isEmpty()) {
+                    listBlogs.clear();
+                }
+
+                jsonArray = new JSONArray(response);
+
+                if (jsonArray.length() > 0) {
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        String id = null, title = null, time = null, desc = null, userIcon = null;
+
+                        JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
+
+                        id = jsonObject.optString("id");
+                        title = jsonObject.optString("title");
+                        time = jsonObject.optString("time");
+                        desc = jsonObject.optString("desc");
+                        userIcon = jsonObject.optString("userIcon");
+
+                        populateBlog(id, title, time, desc, userIcon);
+                    }
+                }
+
+                resetViews();
+            }
+
+        } catch (JSONException je) {
+            Log.e(TAG, Log.getStackTraceString(je));
+        } catch (Exception e) {
+            Log.e(TAG, Log.getStackTraceString(e));
+        }
+
     }
 
     public void populateBlog(String id, String title, String time, String desc, String iconUrl) {
@@ -154,8 +144,9 @@ public class BlogFragment extends Fragment {
         listBlogs.add(bp);
     }
 
-    private void refresh() {
+    private void resetViews() {
         blogAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
     }
 
 }
