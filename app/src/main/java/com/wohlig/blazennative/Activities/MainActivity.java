@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wohlig.blazennative.Fragments.ContactFragment;
+import com.wohlig.blazennative.Fragments.EditProfileFragment;
 import com.wohlig.blazennative.Fragments.PhotoGridFragment;
 import com.wohlig.blazennative.Fragments.SingleBlogFragment;
 import com.wohlig.blazennative.Fragments.SingleEventFragment;
@@ -177,6 +178,18 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         SingleEventFragment fragment = new SingleEventFragment();
+
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    public void editProfile(View v){
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        EditProfileFragment fragment = new EditProfileFragment();
 
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

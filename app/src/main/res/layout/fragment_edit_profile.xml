@@ -3,7 +3,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.wohlig.blazennative.Fragments.ProfileFragment">
+             tools:context="com.wohlig.blazennative.Fragments.EditProfileFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,7 +39,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="15dp"
                     android:gravity="bottom"
-                    android:text="Sohan Honakeri"
                     android:textColor="#fff"
                     android:textSize="20sp"/>
 
@@ -53,11 +52,12 @@
                 android:orientation="vertical">
 
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                              android:layout_width="match_parent"
-                              android:layout_height="match_parent"
-                              android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="beforeDescendants"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
 
                     <com.rey.material.widget.EditText
                         android:id="@+id/etName"
@@ -66,27 +66,28 @@
                         android:hint="Name"
                         android:inputType="textCapWords|textCapSentences"
                         android:maxLines="1"
-                        android:paddingBottom="10dp"
-
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
+                        android:paddingTop="10dp"
                         android:singleLine="true"
+
                         app:et_dividerColor="#ddd"
                         app:et_dividerHeight="@dimen/etDividerHeight"
                         app:et_dividerPadding="@dimen/etDividerPadding"
                         app:et_labelEnable="true"/>
+
 
                     <com.rey.material.widget.EditText
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email"
-                        android:inputType="textCapWords|textCapSentences"
                         android:maxLines="1"
-                        android:paddingBottom="10dp"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
+                        android:paddingTop="10dp"
                         android:singleLine="true"
+
                         app:et_dividerColor="#ddd"
                         app:et_dividerHeight="@dimen/etDividerHeight"
                         app:et_dividerPadding="@dimen/etDividerPadding"
@@ -100,42 +101,19 @@
                         android:hint="Number"
                         android:inputType="textCapWords|textCapSentences"
                         android:maxLines="1"
-                        android:paddingBottom="20dp"
-
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
+                        android:paddingTop="10dp"
                         android:singleLine="true"
+
                         app:et_dividerColor="#ddd"
                         app:et_dividerHeight="@dimen/etDividerHeight"
                         app:et_dividerPadding="@dimen/etDividerPadding"
                         app:et_labelEnable="true"/>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="#ddd"/>
 
                 </LinearLayout>
 
-                <!--<include
-                    layout="@layout/layout_profile_single_row_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <include
-                    layout="@layout/layout_profile_single_row_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <include
-                    layout="@layout/layout_profile_single_row_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <include
-                    layout="@layout/layout_profile_single_row_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -193,20 +171,56 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <include
-                        layout="@layout/layout_profile_single_row_edit"
+                    <com.rey.material.widget.EditText
+                        android:id="@+id/etOldPass"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:hint="Old Password"
+                        android:inputType="textCapWords|textCapSentences"
+                        android:maxLines="1"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="10dp"
+                        android:singleLine="true"
 
-                    <include
-                        layout="@layout/layout_profile_single_row_edit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        app:et_dividerColor="#ddd"
+                        app:et_dividerHeight="@dimen/etDividerHeight"
+                        app:et_dividerPadding="@dimen/etDividerPadding"
+                        app:et_labelEnable="true"/>
 
-                    <include
-                        layout="@layout/layout_profile_single_row_edit"
+                    <com.rey.material.widget.EditText
+                        android:id="@+id/etNewPass"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:hint="New Password"
+                        android:inputType="textCapWords|textCapSentences"
+                        android:maxLines="1"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="10dp"
+                        android:singleLine="true"
+
+                        app:et_dividerColor="#ddd"
+                        app:et_dividerHeight="@dimen/etDividerHeight"
+                        app:et_dividerPadding="@dimen/etDividerPadding"
+                        app:et_labelEnable="true"/>
+
+                    <com.rey.material.widget.EditText
+                        android:id="@+id/etNewPassConfirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Confirm New Password"
+                        android:inputType="textCapWords|textCapSentences"
+                        android:maxLines="1"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="10dp"
+                        android:singleLine="true"
+
+                        app:et_dividerColor="#ddd"
+                        app:et_dividerHeight="@dimen/etDividerHeight"
+                        app:et_dividerPadding="@dimen/etDividerPadding"
+                        app:et_labelEnable="true"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"

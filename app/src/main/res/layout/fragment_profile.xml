@@ -1,9 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.wohlig.blazennative.Fragments.ProfileFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.wohlig.blazennative.Fragments.ProfileFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,12 +17,18 @@
                 android:id="@+id/iv"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:background="#f1f1f1"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/iv"
                 android:background="#ddd"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/llInfo"
+                android:layout_above="@+id/llAll"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_margin="15dp"
@@ -32,71 +38,484 @@
                     android:id="@+id/ivPic"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="#121212"/>
+                    android:background="#ddd"/>
 
                 <TextView
+                    android:id="@+id/tvHeaderName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="15dp"
                     android:gravity="bottom"
-                    android:text="Sohan Honakeri"
-                    android:textColor="#fff"
                     android:textSize="20sp"/>
 
             </LinearLayout>
 
+
             <LinearLayout
-                android:id="@+id/llInfo"
+                android:id="@+id/llAll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/iv"
                 android:orientation="vertical">
 
-                <include
-                    layout="@layout/layout_profile_single_row"
+                <!-- Not Editable -->
+                <LinearLayout
+                    android:id="@+id/llInfo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                <include
-                    layout="@layout/layout_profile_single_row"
+                    <!-- Email -->
+                    <LinearLayout
+                        android:id="@+id/llEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="20dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="#ddd"/>
+
+                            <TextView
+                                android:id="@+id/tvEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+                    </LinearLayout>
+
+
+                    <!-- Number -->
+                    <LinearLayout
+                        android:id="@+id/llNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="20dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="#ddd"/>
+
+                            <TextView
+                                android:id="@+id/tvNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+                    </LinearLayout>
+
+
+                    <!-- Location -->
+                    <LinearLayout
+                        android:id="@+id/llLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="20dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="#ddd"/>
+
+                            <TextView
+                                android:id="@+id/tvLocation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+                    </LinearLayout>
+
+
+                    <!-- Dob -->
+                    <LinearLayout
+                        android:id="@+id/llDob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="20dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="#ddd"/>
+
+                            <TextView
+                                android:id="@+id/tvDob"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <!-- Editable -->
+
+                <LinearLayout
+                    android:id="@+id/llEdit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                <include
-                    layout="@layout/layout_profile_single_row"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
 
-                <include
-                    layout="@layout/layout_profile_single_row"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:descendantFocusability="beforeDescendants"
+                        android:focusableInTouchMode="true"
+                        android:orientation="vertical">
 
+                        <EditText
+                            android:id="@+id/etName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@android:color/transparent"
+                            android:hint="Name"
+                            android:inputType="textCapWords|textCapSentences"
+                            android:maxLines="1"
+
+                            android:singleLine="true"
+                            android:textColorHint="#aaa"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+
+                        <EditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@android:color/transparent"
+                            android:hint="Email"
+                            android:inputType="textEmailAddress"
+
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColorHint="#aaa"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+
+                        <EditText
+                            android:id="@+id/etNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@android:color/transparent"
+                            android:hint="Number"
+                            android:inputType="number"
+                            android:maxLines="1"
+
+                            android:singleLine="true"
+                            android:textColorHint="#aaa"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+
+                        <EditText
+                            android:id="@+id/etLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@android:color/transparent"
+                            android:hint="Location"
+                            android:inputType="textCapWords|textCapSentences"
+                            android:maxLines="1"
+
+                            android:singleLine="true"
+                            android:textColorHint="#aaa"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+
+                        <EditText
+                            android:id="@+id/etDob"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@android:color/transparent"
+                            android:hint="Date of Birth"
+                            android:imeOptions="actionDone"
+                            android:inputType="date"
+
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColorHint="#aaa"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/llProfileSave"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@color/toolBarColor"
+                            android:gravity="center"
+                            android:paddingBottom="10dp"
+
+                            android:paddingTop="10dp"
+                            android:text="Save"
+                            android:textColor="#fff"
+                            android:textSize="18sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#12121212"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="10dp"
+                            android:text="Change Password"
+
+                            android:textColorHint="#aaa"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/etOldPass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@android:color/transparent"
+                            android:hint="Old Password"
+                            android:maxLines="1"
+
+                            android:singleLine="true"
+                            android:textColorHint="#aaa"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+
+                        <EditText
+                            android:id="@+id/etNewPass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@android:color/transparent"
+                            android:hint="New Password"
+                            android:maxLines="1"
+
+                            android:singleLine="true"
+                            android:textColorHint="#aaa"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+
+                        <EditText
+                            android:id="@+id/etNewPassConfirm"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@android:color/transparent"
+                            android:hint="Confirm New Password"
+                            android:imeOptions="actionDone"
+
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColorHint="#aaa"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#ddd"/>
+
+                        <LinearLayout
+                            android:id="@+id/llChangePassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvChangePassoword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="20dp"
+                                android:background="@color/toolBarColor"
+                                android:gravity="center"
+                                android:paddingBottom="10dp"
+                                android:paddingTop="10dp"
+                                android:text="Change Password"
+                                android:textColor="#fff"
+                                android:textSize="18sp"/>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.5dp"
+                                android:background="#ddd"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
             </LinearLayout>
 
-            <!--<com.github.siyamed.shapeimageview.CircularImageView
-                android:id="@+id/ivEdit"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="175dp"
-                android:layout_marginRight="15dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/avatar"
-                app:siBorderWidth="25dp"
-                app:siBorderColor="@color/toolBarColor"/>-->
-
             <com.rey.material.widget.FloatingActionButton
-                android:id="@+id/view"
+                android:id="@+id/fabEdit"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="170dp"
+                android:onClick="editProfile"
                 app:fab_backgroundColor="@color/toolBarColor"
                 app:fab_iconSize="30dp"
-                app:fab_iconSrc="@drawable/abc_btn_rating_star_on_mtrl_alpha"
+                app:fab_iconSrc="@drawable/ic_edit"
                 app:fab_radius="25dp"
                 app:rd_enable="true"/>
 
@@ -104,4 +523,12 @@
 
     </ScrollView>
 
-</FrameLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:indeterminate="true"/>
+
+</RelativeLayout>
