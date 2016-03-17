@@ -6,14 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.WebViewController;
 
 public class WebActivity extends AppCompatActivity {
-    WebView webview;
-    String webLink;
-    ImageView ivBack;
+    private WebView webview;
+    private String webLink;
+    private ImageView ivBack;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +28,25 @@ public class WebActivity extends AppCompatActivity {
 
     public void initilizeViews() {
 
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
         webview = (WebView) findViewById(R.id.webview);
-        webview.setWebViewClient(new WebViewController());
         webview.getSettings().setJavaScriptEnabled(true);
+        webview.setWebViewClient(new WebViewController() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // TODO Auto-generated method stub
+                webview.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                // TODO Auto-generated method stub
+                super.onPageFinished(view, url);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
         webview.loadUrl(webLink);
 
         ivBack = (ImageView) findViewById(R.id.ivBack);
