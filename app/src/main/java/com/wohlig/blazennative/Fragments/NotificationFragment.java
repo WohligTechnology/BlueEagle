@@ -15,8 +15,8 @@ import android.widget.Toast;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
-import com.wohlig.blazennative.Adapters.VideoAlbumsAdapter;
-import com.wohlig.blazennative.POJOs.VideoAlbumsPojo;
+import com.wohlig.blazennative.Adapters.NotificationAdapter;
+import com.wohlig.blazennative.POJOs.NotificationPojo;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.InternetOperations;
 
@@ -27,24 +27,24 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideoFragment extends Fragment {
+public class NotificationFragment extends Fragment {
     private View view;
     private static Activity activity;
     private static String TAG = "BLAZEN";
     private static ProgressBar progressBar;
-    private RecyclerView rvVideoAlbum;
-    private List<VideoAlbumsPojo> listAlbums;
-    private VideoAlbumsAdapter videoAlbumsAdapter;
+    private RecyclerView rvNotificationList;
+    private List<NotificationPojo> listNotification;
+    private NotificationAdapter notificationAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_video, container, false);
-
-        ((MainActivity) this.getActivity()).setToolbarText("VIDEO");
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_notification, container, false);
 
         activity = getActivity();
 
+        ((MainActivity) this.getActivity()).setToolbarText("Notification");
         initilizeViews();
 
         return view;
@@ -52,19 +52,17 @@ public class VideoFragment extends Fragment {
 
     private void initilizeViews() {
 
-        rvVideoAlbum = (RecyclerView) view.findViewById(R.id.rvVideoAlbum);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        rvNotificationList = (RecyclerView) view.findViewById(R.id.rvNotificationList);
 
-        listAlbums = new ArrayList<VideoAlbumsPojo>();
+        listNotification = new ArrayList<NotificationPojo>();
 
-        videoAlbumsAdapter = new VideoAlbumsAdapter(listAlbums);
-        rvVideoAlbum.setAdapter(videoAlbumsAdapter);
+        notificationAdapter = new NotificationAdapter(listNotification);
+        rvNotificationList.setAdapter(notificationAdapter);
 
         LinearLayoutManager llm = new LinearLayoutManager(activity);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        rvVideoAlbum.setLayoutManager(llm);
-
-        //rvVideoAlbum.addItemDecoration(new SpacesItemDecoration(Size.dpToPx(activity, 10)));
+        rvNotificationList.setLayoutManager(llm);
 
         getContent();
     }
@@ -89,37 +87,37 @@ public class VideoFragment extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(activity, "Oops! Something went wrong!", Toast.LENGTH_SHORT).show();
             }
-        }, InternetOperations.SERVER_URL + "video/getAllAlbums");
+        }, InternetOperations.SERVER_URL + "notification/getAll");
 
     }
 
     private void json(String response) {
-        JSONArray jsonArray;
+
+        JSONArray jsonArray = null;
 
         try {
             if (!response.equals("")) {                 //check is the response empty
                 jsonArray = new JSONArray(response);
 
-                listAlbums.clear();
+                listNotification.clear();
                 if (jsonArray.length() > 0) {
 
                     for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.optJSONObject(i);
 
-                        String id = null, image = null, title = null, subTitle = null;
+                        String id = jsonObject.optString("id");
+                        String title = jsonObject.optString("title");
+                        String text = jsonObject.optString("text");
+                        String image = jsonObject.optString("image");
+                        String link = jsonObject.optString("link");
+                        String type = jsonObject.optString("type");
 
-                        JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
-
-                        id = jsonObject.optString("id");
-                        image = jsonObject.optString("image");
-                        title = jsonObject.optString("title");
-                        subTitle = jsonObject.optString("subtitle");
-
-                        populateAlbums(id, image, title, subTitle);
+                        populateNotification(id, title, text, image, link, type);
                     }
                 }
+
                 resetViews();
             }
-
         } catch (JSONException je) {
             Log.e(TAG, Log.getStackTraceString(je));
         } catch (Exception e) {
@@ -127,19 +125,21 @@ public class VideoFragment extends Fragment {
         }
     }
 
-    public void populateAlbums(String id, String image, String title, String subTitle) {
-
-        VideoAlbumsPojo vap = new VideoAlbumsPojo();
-        vap.setId(id);
-        vap.setImageUrl(image);
-        vap.setTitle(title);
-        vap.setSubTitle(subTitle);
-        vap.setContext(activity);
-        listAlbums.add(vap);
+    public void populateNotification(String id, String title,String text, String image, String link, String type) {
+        NotificationPojo np = new NotificationPojo();
+        np.setId(id);
+        np.setTitle(title);
+        np.setText(text);
+        np.setImage(image);
+        np.setLink(link);
+        np.setType(type);
+        np.setContext(activity);
+        listNotification.add(np);
     }
 
     private void resetViews() {
-        videoAlbumsAdapter.notifyDataSetChanged();
+        notificationAdapter.notifyDataSetChanged();
         progressBar.setVisibility(View.GONE);
     }
+
 }
