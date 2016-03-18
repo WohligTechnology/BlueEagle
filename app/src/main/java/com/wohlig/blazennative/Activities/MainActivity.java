@@ -1,7 +1,9 @@
 package com.wohlig.blazennative.Activities;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
@@ -13,11 +15,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wohlig.blazennative.Fragments.ArticleFragment;
+import com.wohlig.blazennative.Fragments.BlogFragment;
 import com.wohlig.blazennative.Fragments.ContactFragment;
-import com.wohlig.blazennative.Fragments.EditProfileFragment;
+import com.wohlig.blazennative.Fragments.EventFragment;
+import com.wohlig.blazennative.Fragments.HomeFragment;
+import com.wohlig.blazennative.Fragments.NotificationFragment;
+import com.wohlig.blazennative.Fragments.PhotoFragment;
 import com.wohlig.blazennative.Fragments.PhotoGridFragment;
+import com.wohlig.blazennative.Fragments.ProfileFragment;
 import com.wohlig.blazennative.Fragments.SingleBlogFragment;
 import com.wohlig.blazennative.Fragments.SingleEventFragment;
+import com.wohlig.blazennative.Fragments.TeamFragment;
+import com.wohlig.blazennative.Fragments.VideoFragment;
 import com.wohlig.blazennative.Fragments.VideoListFragment;
 import com.wohlig.blazennative.Navigation.NavigationDrawerCallbacks;
 import com.wohlig.blazennative.Navigation.NavigationDrawerFragment;
@@ -52,17 +62,8 @@ public class MainActivity extends ActionBarActivity
 
         // Set up the drawer.
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
-        show();
-    }
 
-    public void show() {
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        ContactFragment fragment = new ContactFragment();
-
-        //fragmentTransaction.add(R.id.container, homeFragment, "HOME");
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.commit();
+        goTo("notification", false);
     }
 
     @Override
@@ -124,76 +125,106 @@ public class MainActivity extends ActionBarActivity
         return ID;
     }
 
+    public void goTo(String fragmentName, boolean goBack) {
+
+        Fragment fragment = null;
+
+        if (fragmentName.equals("article")) {                   //Article
+            fragment = new ArticleFragment();
+        } else if (fragmentName.equals("blog")) {               //blog
+            fragment = new BlogFragment();
+        } else if (fragmentName.equals("contact")) {            //contact
+            fragment = new ContactFragment();
+        } else if (fragmentName.equals("event")) {              //event
+            fragment = new EventFragment();
+        } else if (fragmentName.equals("home")) {               //home
+            fragment = new HomeFragment();
+        } else if (fragmentName.equals("notification")) {       //notification
+            fragment = new NotificationFragment();
+        } else if (fragmentName.equals("photo")) {              //photo
+            fragment = new PhotoFragment();
+        } else if (fragmentName.equals("profile")) {            //profile
+            fragment = new ProfileFragment();
+        } else if (fragmentName.equals("team")) {               //team
+            fragment = new TeamFragment();
+        } else if (fragmentName.equals("video")) {              //video
+            fragment = new VideoFragment();
+        } else if (fragmentName.equals("singleBlog")){          //singleBlog
+            fragment = new SingleBlogFragment();
+        } else if (fragmentName.equals("videoGallery")){        //video gallery
+            fragment = new VideoListFragment();
+        } else if (fragmentName.equals("singleEvent")){         //singleEvent
+            fragment = new SingleEventFragment();
+        } else if (fragmentName.equals("imageGallery")){        //image gallery
+            fragment = new PhotoGridFragment();
+        } else {                                                //default Home
+            fragment = new HomeFragment();
+        }
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+
+        if (goBack)
+            fragmentTransaction.addToBackStack(null);
+
+        fragmentTransaction.commit();
+    }
+
+    public void external(String link){
+        Intent intent = new Intent(MainActivity.this, WebActivity.class);
+        intent.putExtra("webLink", link);
+        startActivity(intent);
+    }
+
     public void goToPhotoGridFragment(View v) {
         String tag = v.getTag().toString();
-        List<String> info = Arrays.asList(tag.split("!!!"));
+        /*List<String> info = Arrays.asList(tag.split("!!!"));
 
         String id = info.get(0);
-        String title = info.get(1);
-        setId(id);
-        setToolbarText(title);
+        String title = info.get(1);*/
+        setId(tag);
+        //setToolbarText(title);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        PhotoGridFragment fragment = new PhotoGridFragment();
-
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        goTo("imageGallery",true);
     }
 
-    public void goToSingleBlog(View v){
+    public void goToSingleBlog(View v) {
         String id = v.getTag().toString();
         setId(id);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        SingleBlogFragment fragment = new SingleBlogFragment();
-
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        goTo("singleBlog",true);
     }
 
-    public void goToVideoList(View v){
+    public void goToVideoList(View v) {
         String id = v.getTag().toString();
         setId(id);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        VideoListFragment fragment = new VideoListFragment();
-
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        goTo("videoGallery",true);
     }
 
-    public void goToSingleEvent(View v){
+    public void goToSingleEvent(View v) {
         String id = v.getTag().toString();
         setId(id);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        SingleEventFragment fragment = new SingleEventFragment();
-
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        goTo("singleEvent", true);
     }
 
-    public void editProfile(View v){
+    public void notification(View v) {
+        String tag = v.getTag().toString();
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        EditProfileFragment fragment = new EditProfileFragment();
+        List<String> notification = Arrays.asList(tag.split("!!!"));
 
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        String type = notification.get(0);
+        String link = notification.get(1);
+
+        if(!type.equals("external")) {
+            setId(link);
+            goTo(type, true);
+        }else {
+            external(link);
+        }
     }
 }

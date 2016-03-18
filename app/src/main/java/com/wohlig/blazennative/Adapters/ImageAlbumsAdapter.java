@@ -34,7 +34,8 @@ public class ImageAlbumsAdapter extends RecyclerView.Adapter<ImageAlbumsAdapter.
     @Override
     public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
         final ImageAlbumsPojo iap = imageAlbumsPojoList.get(i);
-        String tag = iap.getId()+"!!!"+iap.getTitle();
+        //String tag = iap.getId()+"!!!"+iap.getTitle();
+        String tag = iap.getId();
 
         customViewHolder.llImageAlbumCard.setTag(tag);
 
@@ -44,14 +45,6 @@ public class ImageAlbumsAdapter extends RecyclerView.Adapter<ImageAlbumsAdapter.
                     .into(customViewHolder.ivCover);
         }
         customViewHolder.tvTitle.setText(iap.getTitle());
-
-        /*customViewHolder.llImageAlbumCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(iap.getContext(), v.getTag().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
 
         /*Animation animation = AnimationUtils.loadAnimation(iap.getContext(), (i > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
         customViewHolder.itemView.startAnimation(animation);

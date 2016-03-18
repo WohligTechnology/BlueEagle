@@ -53,7 +53,7 @@ public class PhotoGridFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_photo_grid, container, false);
 
-        //((MainActivity) this.getActivity()).setToolbarText("IMAGE");
+        ((MainActivity) this.getActivity()).setToolbarText("IMAGE");
 
         albumId = ((MainActivity) this.getActivity()).getId();
 
@@ -111,7 +111,6 @@ public class PhotoGridFragment extends Fragment {
         HttpCallback.get(new HttpInterface() {
             @Override
             public void refreshView(String response) {
-                Log.e(TAG, response);
                 progressBar.setVisibility(View.VISIBLE);
                 json(response);
             }
