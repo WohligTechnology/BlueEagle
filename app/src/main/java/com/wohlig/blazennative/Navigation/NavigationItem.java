@@ -8,11 +8,15 @@ import android.graphics.drawable.Drawable;
 public class NavigationItem {
     private String mText;
     private Drawable mDrawable;
+    private String mType;
+    private String mLink;
 
-    public NavigationItem(String text, Drawable drawable) {
+    /*public NavigationItem(String text, Drawable drawable, String type, String link) {
         mText = text;
         mDrawable = drawable;
-    }
+        mType = type;
+        mLink = link;
+    }*/
 
     public String getText() {
         return mText;
@@ -28,5 +32,21 @@ public class NavigationItem {
 
     public void setDrawable(Drawable drawable) {
         mDrawable = drawable;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public void setLink(String mLink) {
+        this.mLink = mLink;
+    }
+
+    public String getType() {
+        return mType;
+    }
+
+    public void setType(String mType) {
+        this.mType = mType;
     }
 }

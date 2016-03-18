@@ -41,6 +41,7 @@ public class MainActivity extends ActionBarActivity
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
+    private static String TAG = "BLAZEN";
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
     private static TextView tvTitle;
@@ -63,13 +64,18 @@ public class MainActivity extends ActionBarActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
 
-        goTo("notification", false);
+        //goTo("notification", false);
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    public void onNavigationDrawerItemSelected(int position,String type, String link) {
         // update the main content by replacing fragments
-        //Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
+        if(!type.equals("external")) {
+            setId(link);
+            goTo(type, false);
+        }else {
+            external(link);
+        }
     }
 
     @Override
@@ -111,6 +117,10 @@ public class MainActivity extends ActionBarActivity
         int id = item.getItemId();
         Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
         return super.onOptionsItemSelected(item);
+    }
+
+    public void test(String abc){
+
     }
 
     public static void setToolbarText(String text) {

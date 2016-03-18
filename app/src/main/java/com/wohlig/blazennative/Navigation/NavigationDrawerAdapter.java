@@ -29,7 +29,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     }
 
     @Override
-    public NavigationDrawerAdapter.ViewHolder onCreateViewHolder(final ViewGroup viewGroup, int i) {
+    public NavigationDrawerAdapter.ViewHolder onCreateViewHolder(final ViewGroup viewGroup, final int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.drawer_row, viewGroup, false);
         final ViewHolder viewHolder = new ViewHolder(v);
         viewHolder.itemView.setClickable(true);
@@ -44,7 +44,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
                                                        v.setSelected(true);
                                                        mSelectedView = v;
                                                        if (mNavigationDrawerCallbacks != null)
-                                                           mNavigationDrawerCallbacks.onNavigationDrawerItemSelected(viewHolder.getAdapterPosition());
+                                                           mNavigationDrawerCallbacks.onNavigationDrawerItemSelected(viewHolder.getAdapterPosition(),"","");
                                                    }
                                                }
         );

@@ -11,11 +11,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.wohlig.blazennative.ARC.Http.HttpCallback;
+import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.R;
+import com.wohlig.blazennative.Util.InternetOperations;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +59,16 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+    private List<NavigationItem> navigationItems;
+    private Activity activity;
+    private ProgressBar progressBar;
+    private static String TAG = "BLAZEN";
+    private NavigationDrawerAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        activity = getActivity();
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -65,18 +80,50 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         }
     }
 
+    private void getContent() {
+
+        HttpCallback.get(new HttpInterface() {
+            @Override
+            public void refreshView(String response) {
+                progressBar.setVisibility(View.VISIBLE);
+                json(response);
+            }
+
+            @Override
+            public void noInternet() {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(activity, "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void error() {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(activity, "Oops! Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        }, InternetOperations.SERVER_URL + "navigation/get");
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerList = (RecyclerView) view.findViewById(R.id.drawerList);
+
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+
+        getContent();
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mDrawerList.setLayoutManager(layoutManager);
         mDrawerList.setHasFixedSize(true);
 
-        final List<NavigationItem> navigationItems = getMenu();
-        NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(navigationItems);
+        //navigationItems = getMenu();
+        navigationItems = new ArrayList<NavigationItem>();
+        adapter = new NavigationDrawerAdapter(navigationItems);
         adapter.setNavigationDrawerCallbacks(this);
         mDrawerList.setAdapter(adapter);
         //selectItem(mCurrentSelectedPosition);
@@ -96,21 +143,71 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    public void onNavigationDrawerItemSelected(int position, String type, String link) {
         selectItem(position);
+    }
+
+    private void json(String response) {
+
+        JSONArray jsonArray = null;
+
+        try {
+            if (!response.equals("")) {                 //check is the response empty
+                jsonArray = new JSONArray(response);
+
+                if (jsonArray.length() > 0) {
+
+                    //navigationItems.clear();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject jsonObject = jsonArray.optJSONObject(i);
+                        String title = jsonObject.optString("title");
+                        String type = jsonObject.optString("type");
+                        String link = jsonObject.optString("link");
+
+                        addMenuItem(title, type, link);
+                    }
+
+                }
+                resetViews();
+            }
+        } catch (JSONException je) {
+            Log.e(TAG, Log.getStackTraceString(je));
+        } catch (Exception e) {
+            Log.e(TAG, Log.getStackTraceString(e));
+        }
+
+    }
+
+    private void resetViews(){
+        adapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
+        selectItem(mCurrentSelectedPosition);
+    }
+
+    private void addMenuItem(String title, String type, String link){
+
+        NavigationItem navigationItem = new NavigationItem();
+        navigationItem.setText(title);
+        navigationItem.setType(type);
+        navigationItem.setLink(link);
+        navigationItem.setDrawable(getResources().getDrawable(R.drawable.ic_menu_check));
+
+        navigationItems.add(navigationItem);
     }
 
     public List<NavigationItem> getMenu() {
         List<NavigationItem> items = new ArrayList<NavigationItem>();
-        items.add(new NavigationItem("Home", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("Notification", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("About", getResources().getDrawable(R.drawable.ic_menu_check)));
+
+        //items.add(new NavigationItem("Home", getResources().getDrawable(R.drawable.ic_menu_check), "home", "0"));
+        //items.add(new NavigationItem("Notification", getResources().getDrawable(R.drawable.ic_menu_check), "notification", "0"));
+        /*items.add(new NavigationItem("About", getResources().getDrawable(R.drawable.ic_menu_check)));
         items.add(new NavigationItem("Team", getResources().getDrawable(R.drawable.ic_menu_check)));
         items.add(new NavigationItem("Images", getResources().getDrawable(R.drawable.ic_menu_check)));
         items.add(new NavigationItem("Videos", getResources().getDrawable(R.drawable.ic_menu_check)));
         items.add(new NavigationItem("Blog", getResources().getDrawable(R.drawable.ic_menu_check)));
         items.add(new NavigationItem("Social Feeds", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("Event", getResources().getDrawable(R.drawable.ic_menu_check)));
+        items.add(new NavigationItem("Event", getResources().getDrawable(R.drawable.ic_menu_check)));*/
         return items;
     }
 
@@ -173,7 +270,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
         if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(position);
+            mCallbacks.onNavigationDrawerItemSelected(position, navigationItems.get(position).getType(), navigationItems.get(position).getLink());
         }
         ((NavigationDrawerAdapter) mDrawerList.getAdapter()).selectPosition(position);
     }
