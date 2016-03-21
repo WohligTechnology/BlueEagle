@@ -46,10 +46,12 @@
         <activity
             android:name=".Activities.PlayVideoActivity"
             android:label="@string/title_activity_play_video"
+            android:configChanges="orientation|screenSize"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Activities.WebActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_web">
         </activity>
     </application>

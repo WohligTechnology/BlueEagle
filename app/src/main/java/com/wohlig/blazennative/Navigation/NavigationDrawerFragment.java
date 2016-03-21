@@ -74,6 +74,9 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
+        navigationItems = new ArrayList<NavigationItem>();
+        adapter = new NavigationDrawerAdapter(navigationItems);
+
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
@@ -122,8 +125,6 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         mDrawerList.setHasFixedSize(true);
 
         //navigationItems = getMenu();
-        navigationItems = new ArrayList<NavigationItem>();
-        adapter = new NavigationDrawerAdapter(navigationItems);
         adapter.setNavigationDrawerCallbacks(this);
         mDrawerList.setAdapter(adapter);
         //selectItem(mCurrentSelectedPosition);
@@ -199,15 +200,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     public List<NavigationItem> getMenu() {
         List<NavigationItem> items = new ArrayList<NavigationItem>();
 
-        //items.add(new NavigationItem("Home", getResources().getDrawable(R.drawable.ic_menu_check), "home", "0"));
-        //items.add(new NavigationItem("Notification", getResources().getDrawable(R.drawable.ic_menu_check), "notification", "0"));
-        /*items.add(new NavigationItem("About", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("Team", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("Images", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("Videos", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("Blog", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("Social Feeds", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("Event", getResources().getDrawable(R.drawable.ic_menu_check)));*/
+        /*items.add(new NavigationItem("Home", getResources().getDrawable(R.drawable.ic_menu_check), "home", "0"));
+        items.add(new NavigationItem("About", getResources().getDrawable(R.drawable.ic_menu_check)));*/
         return items;
     }
 
