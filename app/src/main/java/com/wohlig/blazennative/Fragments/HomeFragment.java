@@ -12,7 +12,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
@@ -127,11 +128,11 @@ public class HomeFragment extends Fragment {
 
     private void addSliderImage(String imageLink) {
 
-        TextSliderView textSliderView = new TextSliderView(activity);
+        DefaultSliderView textSliderView = new DefaultSliderView(activity);
         textSliderView
                 //.description("Slider")
                 .image(imageLink);
-
+        textSliderView.setScaleType(BaseSliderView.ScaleType.CenterCrop);
         sliderView.addSlider(textSliderView);
 
     }

@@ -88,6 +88,7 @@ public class ViewPagerSliderActivity extends Activity {
         LayoutInflater inflater = getLayoutInflater();
         RelativeLayout v = (RelativeLayout) inflater.inflate(R.layout.layout_slider, null);
         PhotoView photoView = (PhotoView) v.findViewById(R.id.photoView);
+        photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         if (!imageLink.equals("") || !imageLink.isEmpty())
             Picasso.with(this).load(imageLink).into(photoView);
