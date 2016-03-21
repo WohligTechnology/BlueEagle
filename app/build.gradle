@@ -43,4 +43,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
     compile 'com.github.satyan:sugar:1.4'
 
+    compile 'com.mikepenz:iconics-core:2.5.10@aar' //icon fonts
+    compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
+
 }

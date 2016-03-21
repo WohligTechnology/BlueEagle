@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         tvTitle = (TextView) findViewById(R.id.toolbar_title);
-        tvTitle.setText("Home");
+        //tvTitle.setText("Home");
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.fragment_drawer);
@@ -68,14 +68,23 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position,String type, String link) {
+    public void onNavigationDrawerItemSelected(int position,final String type, final String link) {
         // update the main content by replacing fragments
-        if(!type.equals("external")) {
-            setId(link);
-            goTo(type, false);
-        }else {
-            external(link);
-        }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if(!type.equals("external")) {
+                    setId(link);
+                    goTo(type, false);
+                }else {
+                    external(link);
+                }
+
+            }
+        }, 300);
+
     }
 
     @Override
@@ -117,10 +126,6 @@ public class MainActivity extends ActionBarActivity
         int id = item.getItemId();
         Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
         return super.onOptionsItemSelected(item);
-    }
-
-    public void test(String abc){
-
     }
 
     public static void setToolbarText(String text) {

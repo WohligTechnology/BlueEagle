@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.R;
+import com.wohlig.blazennative.Util.IconFont;
 import com.wohlig.blazennative.Util.InternetOperations;
 
 import org.json.JSONArray;
@@ -158,15 +159,17 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
                 if (jsonArray.length() > 0) {
 
-                    //navigationItems.clear();
+                    navigationItems.clear();
                     for (int i = 0; i < jsonArray.length(); i++) {
 
                         JSONObject jsonObject = jsonArray.optJSONObject(i);
                         String title = jsonObject.optString("title");
                         String type = jsonObject.optString("type");
                         String link = jsonObject.optString("link");
+                        String icon = jsonObject.optString("icon").trim();
 
-                        addMenuItem(title, type, link);
+                        icon = IconFont.getGmdFontCode(icon);
+                        addMenuItem(title, type, link, icon);
                     }
 
                 }
@@ -186,13 +189,13 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         selectItem(mCurrentSelectedPosition);
     }
 
-    private void addMenuItem(String title, String type, String link){
+    private void addMenuItem(String title, String type, String link, String icon){
 
         NavigationItem navigationItem = new NavigationItem();
         navigationItem.setText(title);
         navigationItem.setType(type);
         navigationItem.setLink(link);
-        navigationItem.setDrawable(getResources().getDrawable(R.drawable.ic_menu_check));
+        navigationItem.setDrawable(icon);
 
         navigationItems.add(navigationItem);
     }
