@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
@@ -49,10 +50,19 @@
                 android:layout_marginTop="6dp"
                 android:visibility="gone">
 
-                <ImageView
+                <!--<ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="#ddd"/>
+                    android:background="#ddd"/>-->
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/ivDate"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:textSize="18sp"
+                    android:gravity="center_vertical"
+                    app:iiv_icon="gmd-today"
+                    app:iiv_color="@color/toolBarColor"/>
 
                 <TextView
                     android:id="@+id/tvDate"
@@ -69,10 +79,19 @@
                 android:layout_marginTop="6dp"
                 android:visibility="gone">
 
-                <ImageView
+                <!--<ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="#ddd"/>
+                    android:background="#ddd"/>-->
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/ivTime"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:textSize="18sp"
+                    android:gravity="center_vertical"
+                    app:iiv_icon="gmd-access-time"
+                    app:iiv_color="@color/toolBarColor"/>
 
                 <TextView
                     android:id="@+id/tvTime"

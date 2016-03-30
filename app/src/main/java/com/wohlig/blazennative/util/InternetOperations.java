@@ -7,7 +7,7 @@ import java.io.IOException;
  */
 public class InternetOperations {
 
-    public static String SERVER_URL = "http://192.168.0.200:81/callApi/blazen/";
+    public static String SERVER_URL = "http://192.168.1.200:81/callApi/blazen/";
     public static String SERVER_UPLOADS_URL = "http://www.jaipurpinkpanthers.com/admin/uploads/";
     public static String SERVER_THUMB_URL = "http://www.jaipurpinkpanthers.com/admin/index.php/image/index?name=";
     public static String SERVER_WIDTH_250 = "&width=250";

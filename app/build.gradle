@@ -46,4 +46,6 @@ dependencies {
     compile 'com.mikepenz:iconics-core:2.5.10@aar' //icon fonts
     compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
 
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'        //GCM
+
 }
