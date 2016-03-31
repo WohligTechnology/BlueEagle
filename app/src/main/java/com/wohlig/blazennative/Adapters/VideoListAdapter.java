@@ -1,7 +1,6 @@
 package com.wohlig.blazennative.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.wohlig.blazennative.Activities.PlayVideoActivity;
 import com.wohlig.blazennative.POJOs.VideoListPojo;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.Youtube;
@@ -54,14 +52,17 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Cust
 
             customViewHolder.tvTitle.setText(vlp.getTitle());
 
-            customViewHolder.llVideoListCard.setOnClickListener(new View.OnClickListener() {
+            customViewHolder.llVideoListCard.setTag(playLink);
+
+            /*customViewHolder.llVideoListCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PlayVideoActivity.class);
                     intent.putExtra("webLink", playLink);
                     context.startActivity(intent);
+                    //overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
                 }
-            });
+            });*/
         }
 
         /*Animation animation = AnimationUtils.loadAnimation(iap.getContext(), (i > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);

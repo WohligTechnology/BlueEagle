@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.wohlig.blazennative.Fragments.NotificationFragment;
 import com.wohlig.blazennative.Fragments.PhotoFragment;
 import com.wohlig.blazennative.Fragments.PhotoGridFragment;
 import com.wohlig.blazennative.Fragments.ProfileFragment;
+import com.wohlig.blazennative.Fragments.SettingsFragment;
 import com.wohlig.blazennative.Fragments.SingleBlogFragment;
 import com.wohlig.blazennative.Fragments.SingleEventFragment;
 import com.wohlig.blazennative.Fragments.TeamFragment;
@@ -48,6 +50,8 @@ public class MainActivity extends ActionBarActivity
     private static String ID;
     private boolean doubleBackToExitPressedOnce = false;
 
+    private static DrawerLayout mNavigationLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,8 @@ public class MainActivity extends ActionBarActivity
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         tvTitle = (TextView) findViewById(R.id.toolbar_title);
         //tvTitle.setText("Home");
 
@@ -64,8 +70,10 @@ public class MainActivity extends ActionBarActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
 
-        //goTo("notification", false);
+
+        mNavigationLayout = mNavigationDrawerFragment.getDrawerLayout();
     }
+
 
     @Override
     public void onNavigationDrawerItemSelected(int position,final String type, final String link) {
@@ -75,10 +83,10 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void run() {
 
-                if(!type.equals("external")) {
+                if (!type.equals("external")) {
                     setId(link);
                     goTo(type, false);
-                }else {
+                } else {
                     external(link);
                 }
 
@@ -113,6 +121,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             getMenuInflater().inflate(R.menu.main, menu);
             return true;
@@ -122,6 +131,11 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.e(TAG,item.toString());
+        if (item.getItemId() == android.R.id.home) {
+            Log.e(TAG,"Home pressed");
+        }
+
 
         int id = item.getItemId();
         Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
@@ -172,6 +186,8 @@ public class MainActivity extends ActionBarActivity
             fragment = new SingleEventFragment();
         } else if (fragmentName.equals("imageGallery")){        //image gallery
             fragment = new PhotoGridFragment();
+        } else if (fragmentName.equals("settings")){        //image gallery
+            fragment = new SettingsFragment();
         } else {                                                //default Home
             fragment = new HomeFragment();
         }
@@ -188,10 +204,21 @@ public class MainActivity extends ActionBarActivity
         fragmentTransaction.commit();
     }
 
+    public static void lockNavigationSlide() {
+        mNavigationLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        //back = true;
+    }
+
+    public static void unlockNavigationSlide() {
+        mNavigationLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        //back = false;
+    }
+
     public void external(String link){
         Intent intent = new Intent(MainActivity.this, WebActivity.class);
         intent.putExtra("webLink", link);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
     }
 
     public void goToPhotoGridFragment(View v) {
@@ -203,7 +230,7 @@ public class MainActivity extends ActionBarActivity
         setId(tag);
         //setToolbarText(title);
 
-        goTo("imageGallery",true);
+        goTo("imageGallery", true);
     }
 
     public void goToSingleBlog(View v) {
@@ -220,11 +247,27 @@ public class MainActivity extends ActionBarActivity
         goTo("videoGallery",true);
     }
 
+    public void goToSingleVideo(View v){
+        String playLink = v.getTag().toString();
+        Intent intent = new Intent(MainActivity.this, PlayVideoActivity.class);
+        intent.putExtra("webLink", playLink);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_left_in,R.anim.slide_left_out);
+    }
+
     public void goToSingleEvent(View v) {
         String id = v.getTag().toString();
         setId(id);
 
         goTo("singleEvent", true);
+    }
+
+    public void goToSettings(View v){
+        if (mNavigationDrawerFragment.isDrawerOpen()) {
+            mNavigationDrawerFragment.closeDrawer();
+        }
+        goTo("settings", true);
+        //Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
     }
 
     public void notification(View v) {

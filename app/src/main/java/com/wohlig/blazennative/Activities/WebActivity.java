@@ -53,8 +53,9 @@ public class WebActivity extends AppCompatActivity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webview.destroy();
-                finish();
+                /*webview.destroy();
+                finish();*/
+                onBackPressed();
             }
         });
     }
@@ -66,6 +67,7 @@ public class WebActivity extends AppCompatActivity {
         } else {
             webview.destroy();
             finish();
+            overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in);
         }
     }
 
