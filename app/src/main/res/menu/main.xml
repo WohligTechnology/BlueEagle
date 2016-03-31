@@ -7,6 +7,6 @@
         android:id="@+id/action_cart"
         android:title="Search"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_menu_check"
+        android:icon="@drawable/ic_search"
         app:showAsAction="ifRoom" />
 </menu>

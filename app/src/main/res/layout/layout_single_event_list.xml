@@ -57,10 +57,9 @@
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:id="@+id/ivDate"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:textSize="18sp"
-                    android:gravity="center_vertical"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
                     app:iiv_icon="gmd-today"
                     app:iiv_color="@color/toolBarColor"/>
 
@@ -86,10 +85,9 @@
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:id="@+id/ivTime"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:textSize="18sp"
-                    android:gravity="center_vertical"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
                     app:iiv_icon="gmd-access-time"
                     app:iiv_color="@color/toolBarColor"/>
 

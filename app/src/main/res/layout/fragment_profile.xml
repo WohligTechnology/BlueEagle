@@ -82,10 +82,19 @@
                             android:paddingRight="15dp"
                             android:paddingTop="20dp">
 
-                            <ImageView
+                            <!--<ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:background="#ddd"/>
+                                android:background="#ddd"/>-->
+
+                            <com.mikepenz.iconics.view.IconicsImageView
+                                android:id="@+id/ivEmail"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:textSize="18sp"
+                                android:gravity="center_vertical"
+                                app:iiv_icon="gmd-email"
+                                app:iiv_color="@color/toolBarColor"/>
 
                             <TextView
                                 android:id="@+id/tvEmail"
@@ -118,10 +127,19 @@
                             android:paddingRight="15dp"
                             android:paddingTop="20dp">
 
-                            <ImageView
+                            <!--<ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:background="#ddd"/>
+                                android:background="#ddd"/>-->
+
+                            <com.mikepenz.iconics.view.IconicsImageView
+                                android:id="@+id/ivPhone"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:textSize="18sp"
+                                android:gravity="center_vertical"
+                                app:iiv_icon="gmd-phone"
+                                app:iiv_color="@color/toolBarColor"/>
 
                             <TextView
                                 android:id="@+id/tvNumber"
@@ -154,10 +172,19 @@
                             android:paddingRight="15dp"
                             android:paddingTop="20dp">
 
-                            <ImageView
+                            <!--<ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:background="#ddd"/>
+                                android:background="#ddd"/>-->
+
+                            <com.mikepenz.iconics.view.IconicsImageView
+                                android:id="@+id/ivLocation"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:textSize="18sp"
+                                android:gravity="center_vertical"
+                                app:iiv_icon="gmd-location-on"
+                                app:iiv_color="@color/toolBarColor"/>
 
                             <TextView
                                 android:id="@+id/tvLocation"
@@ -190,10 +217,19 @@
                             android:paddingRight="15dp"
                             android:paddingTop="20dp">
 
-                            <ImageView
+                            <!--<ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:background="#ddd"/>
+                                android:background="#ddd"/>-->
+
+                            <com.mikepenz.iconics.view.IconicsImageView
+                                android:id="@+id/ivDate"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:textSize="18sp"
+                                android:gravity="center_vertical"
+                                app:iiv_icon="gmd-today"
+                                app:iiv_color="@color/toolBarColor"/>
 
                             <TextView
                                 android:id="@+id/tvDob"

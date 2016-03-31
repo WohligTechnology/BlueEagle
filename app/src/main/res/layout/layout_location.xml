@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -64,10 +65,19 @@
                     android:paddingRight="10dp"
                     android:paddingTop="15dp">
 
-                    <ImageView
+                    <!--<ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:background="#ddd"/>
+                        android:background="#ddd"/>-->
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:id="@+id/ivLcoation"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"
+                        app:iiv_icon="gmd-location-on"
+                        app:iiv_color="@color/toolBarColor"/>
 
                     <TextView
                         android:id="@+id/tvAddress"
@@ -99,10 +109,19 @@
                     android:paddingRight="10dp"
                     android:paddingTop="15dp">
 
-                    <ImageView
+                    <!--<ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:background="#ddd"/>
+                        android:background="#ddd"/>-->
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:id="@+id/ivNumber"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"
+                        app:iiv_icon="gmd-phone"
+                        app:iiv_color="@color/toolBarColor"/>
 
                     <TextView
                         android:id="@+id/tvNumber"
@@ -134,10 +153,19 @@
                     android:paddingRight="10dp"
                     android:paddingTop="15dp">
 
-                    <ImageView
+                    <!--<ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:background="#ddd"/>
+                        android:background="#ddd"/>-->
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:id="@+id/ivEmail"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"
+                        app:iiv_icon="gmd-email"
+                        app:iiv_color="@color/toolBarColor"/>
 
                     <TextView
                         android:id="@+id/tvEmail"

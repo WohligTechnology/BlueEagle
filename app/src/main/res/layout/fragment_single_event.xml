@@ -54,8 +54,8 @@
                         android:background="#ddd"/>-->
                     <com.mikepenz.iconics.view.IconicsImageView
                         android:id="@+id/ivDate"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:textSize="18sp"
                         android:gravity="center_vertical"
                         app:iiv_icon="gmd-today"
@@ -85,8 +85,8 @@
 
                     <com.mikepenz.iconics.view.IconicsImageView
                         android:id="@+id/ivVenue"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:textSize="18sp"
                         android:gravity="center_vertical"
                         app:iiv_icon="gmd-location-on"
