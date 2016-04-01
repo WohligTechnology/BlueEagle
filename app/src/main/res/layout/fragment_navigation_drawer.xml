@@ -26,10 +26,10 @@
             android:paddingTop="10dp">
 
             <ImageView
+                android:id="@+id/ivPic"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:adjustViewBounds="false"
-                android:src="@drawable/avatar"/>
+                android:adjustViewBounds="false"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -39,20 +39,20 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="Jay Visariya"
                     android:textColor="@android:color/white"
                     android:textSize="15sp"/>
 
                 <TextView
+                    android:id="@+id/tvEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="jayvisariya93@gmail.com"
                     android:textColor="@android:color/white"
                     android:textSize="12sp"/>
 

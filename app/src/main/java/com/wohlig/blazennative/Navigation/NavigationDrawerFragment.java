@@ -15,10 +15,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.R;
@@ -67,6 +70,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     private static String TAG = "BLAZEN";
     private NavigationDrawerAdapter adapter;
     private View view;
+    private boolean user = false;
+    private LinearLayout top;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +97,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
             @Override
             public void refreshView(String response) {
                 progressBar.setVisibility(View.VISIBLE);
+                user = false;
                 json(response);
             }
 
@@ -121,6 +127,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         getContent();
+
+        top = (LinearLayout) view.findViewById(R.id.top);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -153,18 +161,19 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
     private void json(String response) {
 
-        JSONArray jsonArray = null;
-
         try {
             if (!response.equals("")) {                 //check is the response empty
-                jsonArray = new JSONArray(response);
 
-                if (jsonArray.length() > 0) {
+                JSONObject mainObject = new JSONObject(response);
+
+                JSONArray navigationArray = new JSONArray(mainObject.optString("navigation"));
+
+                if (navigationArray.length() > 0) {
 
                     navigationItems.clear();
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < navigationArray.length(); i++) {
 
-                        JSONObject jsonObject = jsonArray.optJSONObject(i);
+                        JSONObject jsonObject = navigationArray.optJSONObject(i);
                         String title = jsonObject.optString("title");
                         String type = jsonObject.optString("type");
                         String link = jsonObject.optString("link");
@@ -174,6 +183,20 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
                         addMenuItem(title, type, link, icon);
                     }
 
+                }
+
+                final String userInfo = mainObject.optString("user");
+
+                if (!userInfo.equals("") || !userInfo.isEmpty()) {
+
+                    JSONObject userObject = new JSONObject(userInfo);
+
+                    String name = userObject.optString("name");
+                    String email = userObject.optString("email");
+                    String picture = userObject.optString("picture");
+                    profileInfo(name, email, picture);
+
+                    user = true;
                 }
                 resetViews();
             }
@@ -185,15 +208,45 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
     }
 
-    private void resetViews(){
+    private void resetViews() {
         adapter.notifyDataSetChanged();
-        LinearLayout top = (LinearLayout) view.findViewById(R.id.top);
-        top.setVisibility(View.VISIBLE);
+
+        if (user)
+            top.setVisibility(View.VISIBLE);
+
         progressBar.setVisibility(View.GONE);
         selectItem(mCurrentSelectedPosition);
     }
 
-    private void addMenuItem(String title, String type, String link, String icon){
+    private void profileInfo(String name, String email, String picture) {
+        ImageView ivPic = (ImageView) view.findViewById(R.id.ivPic);
+
+        TextView tvName = (TextView) view.findViewById(R.id.tvName);
+        TextView tvEmail = (TextView) view.findViewById(R.id.tvEmail);
+
+        //picture
+        if (!picture.equals("") || !picture.isEmpty()) {
+            Picasso.with(activity).load(picture).into(ivPic);
+        } else {
+
+        }
+
+        //name
+        if (!name.equals("") || !name.isEmpty()) {
+            tvName.setText(name);
+        } else {
+            tvName.setText("");
+        }
+
+        //email
+        if (!email.equals("") || !email.isEmpty()) {
+            tvEmail.setText(email);
+        } else {
+            tvEmail.setText("");
+        }
+    }
+
+    private void addMenuItem(String title, String type, String link, String icon) {
 
         NavigationItem navigationItem = new NavigationItem();
         navigationItem.setText(title);
