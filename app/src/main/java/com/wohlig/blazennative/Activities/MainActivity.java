@@ -186,7 +186,7 @@ public class MainActivity extends ActionBarActivity
             fragment = new SingleEventFragment();
         } else if (fragmentName.equals("imageGallery")){        //image gallery
             fragment = new PhotoGridFragment();
-        } else if (fragmentName.equals("settings")){        //image gallery
+        } else if (fragmentName.equals("settings")){            //settings
             fragment = new SettingsFragment();
         } else {                                                //default Home
             fragment = new HomeFragment();
@@ -267,7 +267,12 @@ public class MainActivity extends ActionBarActivity
         if (mNavigationDrawerFragment.isDrawerOpen()) {
             mNavigationDrawerFragment.closeDrawer();
         }
-        goTo("settings", true);
+        //goTo("settings", true);
+
+        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+
         //Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
     }
 

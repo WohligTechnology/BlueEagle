@@ -1,12 +1,11 @@
 package com.wohlig.blazennative.Fragments;
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wohlig.blazennative.Activities.MainActivity;
 import com.wohlig.blazennative.R;
 
 public class SettingsFragment extends Fragment {
@@ -18,7 +17,7 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        ((MainActivity) this.getActivity()).setToolbarText("Settings");
+        //((MainActivity) this.getActivity()).setToolbarText("Settings");
 
 
         return view;

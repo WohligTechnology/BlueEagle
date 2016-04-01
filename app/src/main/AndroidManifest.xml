@@ -32,7 +32,7 @@
         <activity
             android:name=".Activities.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,20 +41,24 @@
         </activity>
         <activity
             android:name=".Activities.ViewPagerSliderActivity"
-            android:label="@string/title_activity_view_pager"
             android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_view_pager"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Activities.PlayVideoActivity"
-            android:label="@string/title_activity_play_video"
             android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_play_video"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Activities.WebActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_web">
+            android:label="@string/title_activity_web" >
+        </activity>
+        <activity
+            android:name=".Activities.SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 

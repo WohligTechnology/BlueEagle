@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -65,6 +66,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     private ProgressBar progressBar;
     private static String TAG = "BLAZEN";
     private NavigationDrawerAdapter adapter;
+    private View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,7 +115,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
                              Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerList = (RecyclerView) view.findViewById(R.id.drawerList);
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
@@ -185,6 +187,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
     private void resetViews(){
         adapter.notifyDataSetChanged();
+        LinearLayout top = (LinearLayout) view.findViewById(R.id.top);
+        top.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         selectItem(mCurrentSelectedPosition);
     }
