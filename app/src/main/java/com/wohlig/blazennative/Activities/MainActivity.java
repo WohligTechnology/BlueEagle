@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -131,14 +130,15 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.e(TAG,item.toString());
-        if (item.getItemId() == android.R.id.home) {
-            Log.e(TAG,"Home pressed");
-        }
-
-
         int id = item.getItemId();
-        Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
+        String title = item.getTitle().toString().toUpperCase();
+
+        if (title.equals("SEARCH")) {
+            startActivity(new Intent(MainActivity.this,SearchActivity.class));
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+            //Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

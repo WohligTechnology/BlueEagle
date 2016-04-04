@@ -195,6 +195,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
                     String picture = userObject.optString("picture");
                     profileInfo(name, email, picture);
 
+                } else {
+                    top.setVisibility(View.GONE);
                 }
                 resetViews();
             }
