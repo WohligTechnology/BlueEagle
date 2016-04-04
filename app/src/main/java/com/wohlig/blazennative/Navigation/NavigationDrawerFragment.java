@@ -70,7 +70,6 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     private static String TAG = "BLAZEN";
     private NavigationDrawerAdapter adapter;
     private View view;
-    private boolean user = false;
     private LinearLayout top;
 
     @Override
@@ -97,7 +96,6 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
             @Override
             public void refreshView(String response) {
                 progressBar.setVisibility(View.VISIBLE);
-                user = false;
                 json(response);
             }
 
@@ -126,8 +124,6 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-        getContent();
-
         top = (LinearLayout) view.findViewById(R.id.top);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -139,6 +135,9 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         adapter.setNavigationDrawerCallbacks(this);
         mDrawerList.setAdapter(adapter);
         //selectItem(mCurrentSelectedPosition);
+
+        getContent();
+
         return view;
     }
 
@@ -196,7 +195,6 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
                     String picture = userObject.optString("picture");
                     profileInfo(name, email, picture);
 
-                    user = true;
                 }
                 resetViews();
             }
@@ -210,9 +208,6 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
     private void resetViews() {
         adapter.notifyDataSetChanged();
-
-        if (user)
-            top.setVisibility(View.VISIBLE);
 
         progressBar.setVisibility(View.GONE);
         selectItem(mCurrentSelectedPosition);
@@ -244,6 +239,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         } else {
             tvEmail.setText("");
         }
+
+        top.setVisibility(View.VISIBLE);
     }
 
     private void addMenuItem(String title, String type, String link, String icon) {
