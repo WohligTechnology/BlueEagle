@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,6 +70,7 @@ public class PhotoGridFragment extends Fragment {
         tvNoImages = (TextView) view.findViewById(R.id.tvNoImages);
 
         gvImages = (GridView) view.findViewById(R.id.glImages);
+
         Resources r = getResources();
         float padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 5, r.getDisplayMetrics());
@@ -97,9 +99,20 @@ public class PhotoGridFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                ImageView imageView = (ImageView) view.findViewById(R.id.ivThumbnail);
+
+                int[] screenLocation = new int[2];
+                imageView.getLocationOnScreen(screenLocation);
+
                 Intent intent = new Intent(activity, ViewPagerSliderActivity.class);
                 intent.putExtra("position", String.valueOf(position));
                 intent.putExtra("imageLinks", imageLinks);
+
+                intent.putExtra("left", screenLocation[0]).
+                        putExtra("top", screenLocation[1]).
+                        putExtra("width", imageView.getWidth()).
+                        putExtra("height", imageView.getHeight());
+
                 startActivity(intent);
             }
         });
@@ -129,7 +142,6 @@ public class PhotoGridFragment extends Fragment {
         }, InternetOperations.SERVER_URL + "image/getAlbumImages?id=" + albumId);
 
     }
-
 
     private void json(String response) {
         JSONArray jsonArray = null;

@@ -47,6 +47,13 @@ public class SingleBlogFragment extends Fragment {
         id = ((MainActivity) this.getActivity()).getId();
 
         ((MainActivity) this.getActivity()).setToolbarText("BLOG");
+        ((MainActivity) this. getActivity()).lockNavigationSlide();
+        //((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //((MainActivity) getActivity()).getActionBar().setHomeButtonEnabled(false); // disable the button
+        //((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false); // remove the left caret
+        //((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false); // remove the icon
+
         initilizeViews();
 
         return view;
