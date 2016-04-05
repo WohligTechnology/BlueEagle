@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ddd"
-        android:layout_margin="3dp">
+        android:layout_margin="3dp"
+        android:id="@+id/linearLayout2">
 
 
         <LinearLayout
@@ -68,4 +69,29 @@
             android:layout_marginLeft="0.5dp"/>
 
     </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvSearchList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+
+        android:layout_alignParentStart="true"
+        android:background="@color/myDrawerBackground"
+        android:clickable="true"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+
 </RelativeLayout>

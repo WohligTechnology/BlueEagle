@@ -36,7 +36,7 @@ public class ViewPagerSliderActivity extends Activity {
     private int thumbnailLeft;
     private int thumbnailWidth;
     private int thumbnailHeight;
-    private static final int ANIM_DURATION = 700;
+    private static final int ANIM_DURATION = 600;
     private ColorDrawable colorDrawable;
     private Bundle savedInstance;
     private RelativeLayout rlMain;
