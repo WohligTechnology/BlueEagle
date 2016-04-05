@@ -174,4 +174,45 @@ public class SearchActivity extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
     }
+
+    public void goToPhotoGridFragment(View v) {
+        String tag = v.getTag().toString();
+        /*List<String> info = Arrays.asList(tag.split("!!!"));
+
+        String id = info.get(0);
+        String title = info.get(1);*/
+        setId(tag);
+        //setToolbarText(title);
+
+        goTo("imageGallery", true);
+    }
+
+    public void goToSingleBlog(View v) {
+        String id = v.getTag().toString();
+        setId(id);
+
+        goTo("singleBlog", true);
+    }
+
+    public void goToVideoList(View v) {
+        String id = v.getTag().toString();
+        setId(id);
+
+        goTo("videoGallery",true);
+    }
+
+    public void goToSingleVideo(View v){
+        String playLink = v.getTag().toString();
+        Intent intent = new Intent(SearchActivity.this, PlayVideoActivity.class);
+        intent.putExtra("webLink", playLink);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+    }
+
+    public void goToSingleEvent(View v) {
+        String id = v.getTag().toString();
+        setId(id);
+
+        goTo("singleEvent", true);
+    }
 }

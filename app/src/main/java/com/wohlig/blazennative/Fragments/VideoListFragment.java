@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.Adapters.VideoListAdapter;
 import com.wohlig.blazennative.POJOs.VideoListPojo;
 import com.wohlig.blazennative.R;
@@ -43,10 +44,18 @@ public class VideoListFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_video_list, container, false);
 
-        ((MainActivity) this.getActivity()).setToolbarText("VIDEO");
-        id = ((MainActivity) this.getActivity()).getId();
+        //((MainActivity) this.getActivity()).setToolbarText("VIDEO");
+        //id = ((MainActivity) this.getActivity()).getId();
 
         activity = getActivity();
+
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("VIDEO");
+            id = ((SearchActivity) this.getActivity()).getId();
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("VIDEO");
+            id = ((MainActivity) this.getActivity()).getId();
+        }
 
         initilizeViews();
 

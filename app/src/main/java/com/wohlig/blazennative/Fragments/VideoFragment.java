@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.Adapters.VideoAlbumsAdapter;
 import com.wohlig.blazennative.POJOs.VideoAlbumsPojo;
 import com.wohlig.blazennative.R;
@@ -41,9 +42,14 @@ public class VideoFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_video, container, false);
 
-        ((MainActivity) this.getActivity()).setToolbarText("VIDEO");
-
+        //((MainActivity) this.getActivity()).setToolbarText("VIDEO");
         activity = getActivity();
+
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("VIDEO");
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("VIDEO");
+        }
 
         initilizeViews();
 

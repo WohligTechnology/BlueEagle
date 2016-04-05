@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.Adapters.ImageAlbumsAdapter;
 import com.wohlig.blazennative.POJOs.ImageAlbumsPojo;
 import com.wohlig.blazennative.R;
@@ -44,9 +45,14 @@ public class PhotoFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_photo, container, false);
 
-        ((MainActivity) this.getActivity()).setToolbarText("IMAGE");
-
         activity = getActivity();
+
+        //((MainActivity) this.getActivity()).setToolbarText("IMAGE");
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("IMAGE");
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("IMAGE");
+        }
 
         initilizeViews();
 

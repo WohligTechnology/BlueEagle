@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.mikepenz.iconics.view.IconicsImageView;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.Adapters.SearchAdapter;
 import com.wohlig.blazennative.POJOs.SearchPojo;
 import com.wohlig.blazennative.R;
@@ -54,6 +55,14 @@ public class SearchFragment extends Fragment {
         activity = getActivity();
 
         //((SearchActivity) this.getActivity()).setToolbarText("Search");
+
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("Search");
+        }/* else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("IMAGE");
+            albumId = ((MainActivity) this.getActivity()).getId();
+        }*/
+
         initlizeViews();
         addListeners();
 

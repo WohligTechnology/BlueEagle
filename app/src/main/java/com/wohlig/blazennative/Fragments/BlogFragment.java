@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.Adapters.BlogAdapter;
 import com.wohlig.blazennative.POJOs.BlogPojo;
 import com.wohlig.blazennative.R;
@@ -42,8 +43,17 @@ public class BlogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_blog, container, false);
-        ((MainActivity) this.getActivity()).setToolbarText("BLOG");
+
         activity = getActivity();
+
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("BLOG");
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("BLOG");
+        }
+        /*((MainActivity) this.getActivity()).setToolbarText("BLOG");
+        ((MainActivity) this. getActivity()).unlockNavigationSlide();*/
+        //((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         initilizeViews();
 

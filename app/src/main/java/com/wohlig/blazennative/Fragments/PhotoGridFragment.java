@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.Activities.ViewPagerSliderActivity;
 import com.wohlig.blazennative.Adapters.ImageGridAdapter;
 import com.wohlig.blazennative.R;
@@ -54,11 +55,15 @@ public class PhotoGridFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_photo_grid, container, false);
 
-        ((MainActivity) this.getActivity()).setToolbarText("IMAGE");
-
-        albumId = ((MainActivity) this.getActivity()).getId();
-
         activity = getActivity();
+
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("IMAGE");
+            albumId = ((SearchActivity) this.getActivity()).getId();
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("IMAGE");
+            albumId = ((MainActivity) this.getActivity()).getId();
+        }
 
         initilizeViews();
 

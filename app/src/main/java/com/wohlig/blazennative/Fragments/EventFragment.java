@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.Adapters.EventListAdapter;
 import com.wohlig.blazennative.POJOs.EventListPojo;
 import com.wohlig.blazennative.R;
@@ -41,9 +42,14 @@ public class EventFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_event, container, false);
 
-        ((MainActivity) this.getActivity()).setToolbarText("EVENTS");
-
         activity = getActivity();
+
+        //((MainActivity) this.getActivity()).setToolbarText("EVENTS");
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("EVENTS");
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("EVENTS");
+        }
 
         initilizeViews();
 

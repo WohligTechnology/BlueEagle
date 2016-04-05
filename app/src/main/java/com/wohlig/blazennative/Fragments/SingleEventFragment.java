@@ -20,6 +20,7 @@ import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
 import com.wohlig.blazennative.Activities.PlayVideoActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.Activities.ViewPagerSliderActivity;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.InternetOperations;
@@ -53,9 +54,17 @@ public class SingleEventFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_single_event, container, false);
         activity = getActivity();
-        id = ((MainActivity) this.getActivity()).getId();
+        //id = ((MainActivity) this.getActivity()).getId();
+        //((MainActivity) this.getActivity()).setToolbarText("EVENT");
 
-        ((MainActivity) this.getActivity()).setToolbarText("EVENT");
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("EVENT");
+            id = ((SearchActivity) this.getActivity()).getId();
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("EVENT");
+            id = ((MainActivity) this.getActivity()).getId();
+        }
+
         initilizeViews();
 
         return view;

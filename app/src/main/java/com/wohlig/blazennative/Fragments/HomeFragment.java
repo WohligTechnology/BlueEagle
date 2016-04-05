@@ -17,6 +17,7 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.InternetOperations;
 
@@ -48,7 +49,13 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         activity = getActivity();
 
-        ((MainActivity) this.getActivity()).setToolbarText("Home");
+        //((MainActivity) this.getActivity()).setToolbarText("Home");
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("Home");
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("Home");
+        }
+
         initilizeViews();
 
         return view;

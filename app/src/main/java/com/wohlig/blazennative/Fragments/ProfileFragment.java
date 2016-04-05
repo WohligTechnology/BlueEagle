@@ -23,6 +23,7 @@ import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.ARC.Http.HttpSimple;
 import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.FormValidation;
 import com.wohlig.blazennative.Util.InternetOperations;
@@ -54,7 +55,13 @@ public class ProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         activity = getActivity();
-        ((MainActivity) this.getActivity()).setToolbarText("Profile");
+        //((MainActivity) this.getActivity()).setToolbarText("Profile");
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("Profile");
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("Profile");
+        }
+
         initilizeViews();
 
         return view;

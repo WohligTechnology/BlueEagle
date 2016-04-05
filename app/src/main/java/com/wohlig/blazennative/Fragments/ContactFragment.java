@@ -22,6 +22,7 @@ import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.ARC.Http.HttpSimple;
 import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.FormValidation;
 import com.wohlig.blazennative.Util.InternetOperations;
@@ -49,8 +50,16 @@ public class ContactFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_contact, container, false);
-        ((MainActivity) this.getActivity()).setToolbarText("Contact");
+
         activity = getActivity();
+
+        //((MainActivity) this.getActivity()).setToolbarText("Contact");
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("Contact");
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("Contact");
+        }
+
         initilizeViews();
         setListeners();
         return view;

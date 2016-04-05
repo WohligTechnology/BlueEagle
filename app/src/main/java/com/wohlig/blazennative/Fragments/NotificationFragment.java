@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.Adapters.NotificationAdapter;
 import com.wohlig.blazennative.POJOs.NotificationPojo;
 import com.wohlig.blazennative.R;
@@ -44,7 +45,13 @@ public class NotificationFragment extends Fragment {
 
         activity = getActivity();
 
-        ((MainActivity) this.getActivity()).setToolbarText("Notification");
+        //((MainActivity) this.getActivity()).setToolbarText("Notification");
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("Notification");
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("Notification");
+        }
+
         initilizeViews();
 
         return view;

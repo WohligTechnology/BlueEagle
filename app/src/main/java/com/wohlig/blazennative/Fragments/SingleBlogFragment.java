@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import com.wohlig.blazennative.ARC.Http.HttpCallback;
 import com.wohlig.blazennative.ARC.Http.HttpInterface;
 import com.wohlig.blazennative.Activities.MainActivity;
+import com.wohlig.blazennative.Activities.SearchActivity;
 import com.wohlig.blazennative.R;
 import com.wohlig.blazennative.Util.InternetOperations;
 
@@ -44,10 +45,18 @@ public class SingleBlogFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_single_blog, container, false);
         activity = getActivity();
-        id = ((MainActivity) this.getActivity()).getId();
+        //id = ((MainActivity) this.getActivity()).getId();
 
-        ((MainActivity) this.getActivity()).setToolbarText("BLOG");
-        ((MainActivity) this. getActivity()).lockNavigationSlide();
+        if(activity.getLocalClassName().equals("Activities.SearchActivity")) {
+            ((SearchActivity) this.getActivity()).setToolbarText("BLOG");
+            id = ((SearchActivity) this.getActivity()).getId();
+        } else if (activity.getLocalClassName().equals("Activities.MainActivity")) {
+            ((MainActivity) this.getActivity()).setToolbarText("BLOG");
+            id = ((MainActivity) this.getActivity()).getId();
+        }
+
+        /*((MainActivity) this.getActivity()).setToolbarText("BLOG");
+        ((MainActivity) this. getActivity()).lockNavigationSlide();*/
         //((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //((MainActivity) getActivity()).getActionBar().setHomeButtonEnabled(false); // disable the button
