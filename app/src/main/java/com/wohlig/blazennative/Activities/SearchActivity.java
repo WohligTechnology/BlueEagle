@@ -1,6 +1,5 @@
 package com.wohlig.blazennative.Activities;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -39,7 +38,6 @@ public class SearchActivity extends AppCompatActivity {
     private ImageView ivBack;
     private static TextView tvTitle;
     private static String ID;
-    private static Activity ACTIVITY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,20 +82,27 @@ public class SearchActivity extends AppCompatActivity {
         return ID;
     }
 
-    public static void setActivity(Activity activity) {
-        ACTIVITY = activity;
-    }
-
     @Override
     public void onBackPressed() {
-        //closeKeyBoard();
-        finish();
-        overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in);
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
+            //hopenKeyBoard();
+            closeKeyBoard();
+            finish();
+            overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in);
+        } else {
+            getFragmentManager().popBackStack();
+        }
+
     }
 
     private void closeKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
+
+    private void openKeyBoard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     public void notification(View v) {
@@ -110,7 +115,6 @@ public class SearchActivity extends AppCompatActivity {
 
         if(!type.equals("external")) {
             setId(link);
-            setActivity(SearchActivity.this);
             goTo(type, true);
         }else {
             external(link);
@@ -159,7 +163,7 @@ public class SearchActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.animator.fragment_slide_left_enter, R.animator.fragment_slide_left_exit, R.animator.fragment_slide_right_enter, R.animator.fragment_slide_right_exit);
 
-        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.add(R.id.container, fragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
         if (goBack)
@@ -177,13 +181,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public void goToPhotoGridFragment(View v) {
         String tag = v.getTag().toString();
-        /*List<String> info = Arrays.asList(tag.split("!!!"));
-
-        String id = info.get(0);
-        String title = info.get(1);*/
         setId(tag);
-        //setToolbarText(title);
-
         goTo("imageGallery", true);
     }
 

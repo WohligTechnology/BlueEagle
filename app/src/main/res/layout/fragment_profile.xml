@@ -3,6 +3,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/myWindowBackground"
                 tools:context="com.wohlig.blazennative.Fragments.ProfileFragment">
 
     <ScrollView
@@ -91,10 +92,10 @@
                                 android:id="@+id/ivEmail"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:textSize="18sp"
                                 android:gravity="center_vertical"
-                                app:iiv_icon="gmd-email"
-                                app:iiv_color="@color/toolBarColor"/>
+                                android:textSize="18sp"
+                                app:iiv_color="@color/toolBarColor"
+                                app:iiv_icon="gmd-email"/>
 
                             <TextView
                                 android:id="@+id/tvEmail"
@@ -136,10 +137,10 @@
                                 android:id="@+id/ivPhone"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:textSize="18sp"
                                 android:gravity="center_vertical"
-                                app:iiv_icon="gmd-phone"
-                                app:iiv_color="@color/toolBarColor"/>
+                                android:textSize="18sp"
+                                app:iiv_color="@color/toolBarColor"
+                                app:iiv_icon="gmd-phone"/>
 
                             <TextView
                                 android:id="@+id/tvNumber"
@@ -181,10 +182,10 @@
                                 android:id="@+id/ivLocation"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:textSize="18sp"
                                 android:gravity="center_vertical"
-                                app:iiv_icon="gmd-location-on"
-                                app:iiv_color="@color/toolBarColor"/>
+                                android:textSize="18sp"
+                                app:iiv_color="@color/toolBarColor"
+                                app:iiv_icon="gmd-location-on"/>
 
                             <TextView
                                 android:id="@+id/tvLocation"
@@ -226,10 +227,10 @@
                                 android:id="@+id/ivDate"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:textSize="18sp"
                                 android:gravity="center_vertical"
-                                app:iiv_icon="gmd-today"
-                                app:iiv_color="@color/toolBarColor"/>
+                                android:textSize="18sp"
+                                app:iiv_color="@color/toolBarColor"
+                                app:iiv_icon="gmd-today"/>
 
                             <TextView
                                 android:id="@+id/tvDob"

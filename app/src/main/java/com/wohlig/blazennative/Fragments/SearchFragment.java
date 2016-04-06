@@ -236,7 +236,7 @@ public class SearchFragment extends Fragment {
         imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
-    public void openKeyboard(View v) {
+    private void openKeyboard(View v) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(activity.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
